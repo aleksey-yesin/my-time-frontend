@@ -3,6 +3,7 @@
 import { FC, PropsWithChildren } from 'react';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { Provider as JotaiProvider } from 'jotai';
 import { getQueryClient } from './query-client';
 
 const RootLayoutClient: FC<PropsWithChildren> = ({ children }) => {
@@ -10,7 +11,8 @@ const RootLayoutClient: FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {children}
+      <JotaiProvider>{children}</JotaiProvider>
+
       <ReactQueryDevtools />
     </QueryClientProvider>
   );
