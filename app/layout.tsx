@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono, Inter } from 'next/font/google';
-import RootLayoutClient from '@/components/core/root-layout-client';
+import AppProviders from '@/components/core/app-providers';
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
@@ -30,7 +30,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <RootLayoutClient>{children}</RootLayoutClient>
+        <AppProviders>{children}</AppProviders>
       </body>
     </html>
   );

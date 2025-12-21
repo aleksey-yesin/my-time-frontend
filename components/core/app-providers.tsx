@@ -4,9 +4,9 @@ import { FC, PropsWithChildren } from 'react';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Provider as JotaiProvider } from 'jotai';
-import { getQueryClient } from './query-client';
+import { getQueryClient } from '@/lib/query-client';
 
-const RootLayoutClient: FC<PropsWithChildren> = ({ children }) => {
+const AppProviders: FC<PropsWithChildren> = ({ children }) => {
   const queryClient = getQueryClient();
 
   return (
@@ -18,4 +18,4 @@ const RootLayoutClient: FC<PropsWithChildren> = ({ children }) => {
   );
 };
 
-export default RootLayoutClient;
+export default AppProviders;
