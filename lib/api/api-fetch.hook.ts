@@ -1,5 +1,5 @@
 import { useAtom } from 'jotai';
-import { accessToken } from '@/lib/atoms/auth.atoms';
+import { accessTokenAtom, refreshTokenAtom } from '@/lib/atoms/auth.atoms';
 
 /******************************************************************************
  * Fetch wrapper with:
@@ -13,7 +13,8 @@ type ApiFetchOptions = {
 } & RequestInit;
 
 export function useApiFetch() {
-  const [token, setToken] = useAtom(accessToken);
+  const [accessToken, setAccessToken] = useAtom(accessTokenAtom);
+  const [refreshToken, setRefreshToken] = useAtom(refreshTokenAtom);
 
   const apiFetch = async (
     fetchInput: string | URL | Request,
@@ -22,8 +23,8 @@ export function useApiFetch() {
     const { withAuth = true, ...fetchInit } = options;
     const extraHeaders: Record<string, string> = {};
 
-    if (withAuth && token) {
-      extraHeaders.Authorization = `Bearer ${token}`;
+    if (withAuth && accessToken) {
+      extraHeaders.Authorization = `Bearer ${accessToken}`;
     }
     if (typeof fetchInit?.body === 'string') {
       extraHeaders['Content-Type'] = 'application/json';
@@ -36,7 +37,8 @@ export function useApiFetch() {
       },
     });
     if (withAuth && response.status === 401) {
-      setToken(null);
+      setAccessToken(null);
+      setRefreshToken(null);
     }
     if (!response.ok) {
       throw new Error(`Status ${response.status}: ${response.statusText}`);
