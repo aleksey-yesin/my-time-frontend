@@ -31,3 +31,45 @@ export const useLoginMutation = (
     ...mutationOptions,
   });
 };
+
+// ****************************************************************************
+// Logout Mutation
+
+export interface LogoutParams {
+  refresh_token: string;
+}
+
+export const useLogoutMutation = (
+  mutationOptions?: UseMutationOptions<void, Error, LogoutParams>,
+) => {
+  const apiFetch = useApiFetch();
+
+  return useMutation({
+    mutationFn: async (params) => {
+      await apiFetch(`${apiBaseUrl}/auth/logout`, {
+        method: 'POST',
+        body: JSON.stringify(params),
+        withAuth: false,
+      });
+    },
+    ...mutationOptions,
+  });
+};
+
+// ****************************************************************************
+// Logout All Mutation
+
+export const useLogoutAllMutation = (
+  mutationOptions?: UseMutationOptions<void>,
+) => {
+  const apiFetch = useApiFetch();
+
+  return useMutation({
+    mutationFn: async () => {
+      await apiFetch(`${apiBaseUrl}/auth/logout-all`, {
+        method: 'POST',
+      });
+    },
+    ...mutationOptions,
+  });
+};
