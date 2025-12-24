@@ -3,22 +3,22 @@
 import { FC, PropsWithChildren, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAtomValue } from 'jotai';
-import { isAuthenticatedAtom, isAuthLoadingAtom } from '@/lib/atoms/auth.atoms';
+import { isAuthenticatedAtom, hasHydratedAtom } from '@/lib/atoms/auth.atoms';
 
 const redirectPath = '/dashboard';
 
 const RestrictedAccess: FC<PropsWithChildren> = ({ children }) => {
   const router = useRouter();
+  const hasHydrated = useAtomValue(hasHydratedAtom);
   const isAuthenticated = useAtomValue(isAuthenticatedAtom);
-  const isAuthLoading = useAtomValue(isAuthLoadingAtom);
 
   useEffect(() => {
-    if (!isAuthLoading && isAuthenticated) {
+    if (isAuthenticated) {
       router.replace(redirectPath);
     }
-  }, [isAuthLoading, isAuthenticated, router]);
+  }, [isAuthenticated, router]);
 
-  if (isAuthLoading || isAuthenticated) {
+  if (!hasHydrated || isAuthenticated) {
     return null;
   }
 

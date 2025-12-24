@@ -12,7 +12,7 @@ type ApiFetchOptions = {
   withAuth?: boolean;
 } & RequestInit;
 
-export function useApiFetch() {
+const useApiFetch = () => {
   const [accessToken, setAccessToken] = useAtom(accessTokenAtom);
   const [refreshToken, setRefreshToken] = useAtom(refreshTokenAtom);
 
@@ -47,4 +47,6 @@ export function useApiFetch() {
   };
 
   return apiFetch;
-}
+};
+
+export default useApiFetch;
