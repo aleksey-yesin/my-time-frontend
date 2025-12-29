@@ -1,5 +1,5 @@
-import { useAtom } from 'jotai';
-import { accessTokenAtom, refreshTokenAtom } from '@/lib/atoms/auth.atoms';
+import { useSetAtom, useStore } from 'jotai';
+import { accessTokenAtom, logoutAtom } from '@/lib/atoms/auth.atoms';
 
 /******************************************************************************
  * Fetch wrapper with:
@@ -9,36 +9,39 @@ import { accessTokenAtom, refreshTokenAtom } from '@/lib/atoms/auth.atoms';
  */
 
 type ApiFetchOptions = {
-  withAuth?: boolean;
+  skipAuth?: boolean;
 } & RequestInit;
 
 const useApiFetch = () => {
-  const [accessToken, setAccessToken] = useAtom(accessTokenAtom);
-  const [refreshToken, setRefreshToken] = useAtom(refreshTokenAtom);
+  const { get } = useStore();
+  const logout = useSetAtom(logoutAtom);
 
   const apiFetch = async (
-    fetchInput: string | URL | Request,
-    options: ApiFetchOptions = {},
+    url: string | URL | Request,
+    { skipAuth, ...fetchOptions }: ApiFetchOptions = {},
   ) => {
-    const { withAuth = true, ...fetchInit } = options;
-    const extraHeaders: Record<string, string> = {};
+    const getExtendedOptions = () => {
+      const extraHeaders: HeadersInit = {};
+      const accessToken = get(accessTokenAtom);
 
-    if (withAuth && accessToken) {
-      extraHeaders.Authorization = `Bearer ${accessToken}`;
-    }
-    if (typeof fetchInit?.body === 'string') {
-      extraHeaders['Content-Type'] = 'application/json';
-    }
-    const response = await fetch(fetchInput, {
-      ...fetchInit,
-      headers: {
-        ...extraHeaders,
-        ...fetchInit?.headers,
-      },
-    });
-    if (withAuth && response.status === 401) {
-      setAccessToken(null);
-      setRefreshToken(null);
+      if (!skipAuth && accessToken) {
+        extraHeaders.Authorization = `Bearer ${accessToken}`;
+      }
+      if (typeof fetchOptions.body === 'string') {
+        extraHeaders['Content-Type'] = 'application/json';
+      }
+      return {
+        ...fetchOptions,
+        headers: {
+          ...extraHeaders,
+          ...fetchOptions.headers,
+        },
+      };
+    };
+    const response = await fetch(url, getExtendedOptions());
+
+    if (!skipAuth && response.status === 401) {
+      logout();
     }
     if (!response.ok) {
       throw new Error(`Status ${response.status}: ${response.statusText}`);

@@ -12,4 +12,10 @@ export const refreshTokenAtom = atomWithStorage<string | null>(
   'refresh-token',
   null,
 );
+
 export const isAuthenticatedAtom = atom((get) => !!get(accessTokenAtom));
+
+export const logoutAtom = atom(null, (_, set) => {
+  set(accessTokenAtom, null);
+  set(refreshTokenAtom, null);
+});

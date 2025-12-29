@@ -24,7 +24,7 @@ export const useLoginMutation = (
       const response = await apiFetch(`${apiBaseUrl}/auth/login`, {
         method: 'POST',
         body: JSON.stringify(params),
-        withAuth: false,
+        skipAuth: true,
       });
       return response.json();
     },
@@ -49,7 +49,7 @@ export const useLogoutMutation = (
       await apiFetch(`${apiBaseUrl}/auth/logout`, {
         method: 'POST',
         body: JSON.stringify(params),
-        withAuth: false,
+        skipAuth: true,
       });
     },
     ...mutationOptions,
