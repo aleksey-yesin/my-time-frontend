@@ -24,3 +24,7 @@ export const setTokensAtom = atom(
     set(refreshTokenAtom, tokens.refresh);
   },
 );
+export const unsetTokensAtom = atom(undefined, (_, set) => {
+  set(accessTokenAtom, null);
+  set(refreshTokenAtom, null);
+});

@@ -4,6 +4,7 @@ import {
   accessTokenAtom,
   refreshTokenAtom,
   setTokensAtom,
+  unsetTokensAtom,
 } from '@/lib/atoms/auth.atoms';
 import { apiBaseUrl } from './environment';
 
@@ -23,6 +24,7 @@ const mutex = new Mutex();
 const useApiFetch = () => {
   const { get } = useStore();
   const setTokens = useSetAtom(setTokensAtom);
+  const unsetTokens = useSetAtom(unsetTokensAtom);
 
   const apiFetch = async (
     url: string | URL | Request,
@@ -73,10 +75,7 @@ const useApiFetch = () => {
               refresh: json.refresh_token,
             });
           } else {
-            setTokens({
-              access: null,
-              refresh: null,
-            });
+            unsetTokens();
           }
         } finally {
           release();
