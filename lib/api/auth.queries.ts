@@ -1,5 +1,4 @@
 import { useMutation, UseMutationOptions } from '@tanstack/react-query';
-import { apiBaseUrl } from '@/lib/environment';
 import useApiFetch from '@/lib/use-api-fetch';
 
 // ****************************************************************************
@@ -21,7 +20,7 @@ export const useLoginMutation = (
 
   return useMutation({
     mutationFn: async (params) => {
-      const response = await apiFetch(`${apiBaseUrl}/auth/login`, {
+      const response = await apiFetch('/auth/login', {
         method: 'POST',
         body: JSON.stringify(params),
         skipAuth: true,
@@ -46,7 +45,7 @@ export const useLogoutMutation = (
 
   return useMutation({
     mutationFn: async (params) => {
-      await apiFetch(`${apiBaseUrl}/auth/logout`, {
+      await apiFetch('/auth/logout', {
         method: 'POST',
         body: JSON.stringify(params),
         skipAuth: true,
@@ -66,7 +65,7 @@ export const useLogoutAllMutation = (
 
   return useMutation({
     mutationFn: async () => {
-      await apiFetch(`${apiBaseUrl}/auth/logout-all`, {
+      await apiFetch('/auth/logout-all', {
         method: 'POST',
       });
     },
