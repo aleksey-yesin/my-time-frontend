@@ -17,14 +17,14 @@ export const refreshTokenAtom = atomWithStorage<TokenValue>(
 
 export const isAuthenticatedAtom = atom((get) => !!get(accessTokenAtom));
 
-export const setTokensAtom = atom(
+export const setTokenPairAtom = atom(
   undefined,
   (_, set, tokens: { access: TokenValue; refresh: TokenValue }) => {
     set(accessTokenAtom, tokens.access);
     set(refreshTokenAtom, tokens.refresh);
   },
 );
-export const unsetTokensAtom = atom(undefined, (_, set) => {
+export const unsetTokenPairAtom = atom(undefined, (_, set) => {
   set(accessTokenAtom, null);
   set(refreshTokenAtom, null);
 });

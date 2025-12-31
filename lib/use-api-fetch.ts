@@ -3,8 +3,8 @@ import { Mutex } from 'async-mutex';
 import {
   accessTokenAtom,
   refreshTokenAtom,
-  setTokensAtom,
-  unsetTokensAtom,
+  setTokenPairAtom,
+  unsetTokenPairAtom,
 } from '@/lib/atoms/auth.atoms';
 import { apiBaseUrl } from './environment';
 
@@ -23,10 +23,10 @@ type ApiFetchOptions = {
 
 const mutex = new Mutex();
 
-const useRefreshAndUpdateStore = () => {
+const useRefreshTokenPair = () => {
   const { get } = useStore();
-  const setTokens = useSetAtom(setTokensAtom);
-  const unsetTokens = useSetAtom(unsetTokensAtom);
+  const setTokenPair = useSetAtom(setTokenPairAtom);
+  const unsetTokenPair = useSetAtom(unsetTokenPairAtom);
 
   return async () => {
     const response = await fetch(`${apiBaseUrl}/auth/refresh`, {
@@ -40,12 +40,12 @@ const useRefreshAndUpdateStore = () => {
     });
     if (response.ok) {
       const json = await response.json();
-      setTokens({
+      setTokenPair({
         access: json.access_token,
         refresh: json.refresh_token,
       });
     } else {
-      unsetTokens();
+      unsetTokenPair();
     }
     return response;
   };
@@ -60,7 +60,7 @@ const throwIfNotOk = (response: Response) => {
 
 const useApiFetch = () => {
   const { get } = useStore();
-  const refreshAndUpdateStore = useRefreshAndUpdateStore();
+  const refreshTokenPair = useRefreshTokenPair();
 
   return async (
     url: string,
@@ -101,7 +101,7 @@ const useApiFetch = () => {
         const release = await mutex.acquire();
 
         try {
-          refreshResponse = await refreshAndUpdateStore();
+          refreshResponse = await refreshTokenPair();
         } finally {
           release();
         }
