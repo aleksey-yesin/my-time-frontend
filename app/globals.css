@@ -148,14 +148,6 @@
       var(--accent) 100%
     );
   }
-  .beauty-gradient-soft {
-    background: linear-gradient(
-      135deg,
-      oklch(from var(--primary) l c h / 0.15) 0%,
-      oklch(from var(--secondary) l c h / 0.12) 50%,
-      oklch(from var(--accent) l c h / 0.1) 100%
-    );
-  }
 
   .beauty-hover {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);

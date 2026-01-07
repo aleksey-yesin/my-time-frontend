@@ -1,13 +1,30 @@
 import { FC, PropsWithChildren } from 'react';
 
+const backgroundShapesGradient = `
+  linear-gradient(
+    135deg,
+    oklch(from var(--primary) l c h / 0.15) 0%,
+    oklch(from var(--secondary) l c h / 0.12) 50%,
+    oklch(from var(--accent) l c h / 0.1) 100%
+  )
+`;
+
 const AuthLayoutContent: FC<PropsWithChildren> = ({ children }) => {
   return (
-    <div className="relative flex min-h-screen w-full items-center justify-center overflow-hidden bg-background">
-      {/* Large gradient background shapes */}
-      <div className="beauty-gradient-soft animate-pulse-slow absolute top-[-10%] right-[-5%] h-[700px] w-[700px] rounded-full opacity-40 blur-3xl" />
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden">
+      {/* Large background shapes */}
       <div
-        className="beauty-gradient-soft animate-pulse-slow absolute bottom-[-15%] left-[-10%] h-[800px] w-[800px] rounded-full opacity-35 blur-3xl"
-        style={{ animationDelay: '2s' }}
+        className="animate-pulse-slow absolute top-[-10%] right-[-5%] h-175 w-175 rounded-full blur-3xl"
+        style={{
+          background: backgroundShapesGradient,
+        }}
+      />
+      <div
+        className="animate-pulse-slow absolute bottom-[-15%] left-[-10%] h-200 w-200 rounded-full blur-3xl"
+        style={{
+          background: backgroundShapesGradient,
+          animationDelay: '2s',
+        }}
       />
 
       {/* Floating geometric shapes */}
