@@ -1,30 +1,38 @@
 import { FC, PropsWithChildren } from 'react';
+import { cn } from '@/lib/utils';
 
-const backgroundShapesGradient = `
-  linear-gradient(
-    135deg,
-    oklch(from var(--primary) l c h / 0.15) 0%,
-    oklch(from var(--secondary) l c h / 0.12) 50%,
-    oklch(from var(--accent) l c h / 0.1) 100%
-  )
-`;
+const twLargeShapesGradient =
+  'bg-[linear-gradient(135deg,oklch(from_var(--primary)_l_c_h_/_0.15)_0%,oklch(from_var(--secondary)_l_c_h_/_0.12)_50%,oklch(from_var(--accent)_l_c_h_/_0.1)_100%)]';
+const twLargeShapesAnimation =
+  'animate-[large-shapes-pulse_4s_ease-in-out_infinite_backwards]';
 
 const AuthLayoutContent: FC<PropsWithChildren> = ({ children }) => {
   return (
     <div className="relative flex min-h-screen items-center justify-center overflow-hidden">
+      {/* One-time animation, kept it here */}
+      <style>
+        {`
+          @keyframes large-shapes-pulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+          }
+        `}
+      </style>
+
       {/* Large background shapes */}
       <div
-        className="animate-pulse-slow absolute top-[-10%] right-[-5%] h-175 w-175 rounded-full blur-3xl"
-        style={{
-          background: backgroundShapesGradient,
-        }}
+        className={cn(
+          twLargeShapesGradient,
+          twLargeShapesAnimation,
+          'absolute top-[-10%] right-[-5%] h-175 w-175 rounded-full blur-3xl',
+        )}
       />
       <div
-        className="animate-pulse-slow absolute bottom-[-15%] left-[-10%] h-200 w-200 rounded-full blur-3xl"
-        style={{
-          background: backgroundShapesGradient,
-          animationDelay: '2s',
-        }}
+        className={cn(
+          twLargeShapesGradient,
+          twLargeShapesAnimation,
+          'absolute bottom-[-15%] left-[-10%] h-200 w-200 rounded-full blur-3xl delay-2000',
+        )}
       />
 
       {/* Floating geometric shapes */}
