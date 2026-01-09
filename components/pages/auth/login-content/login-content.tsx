@@ -33,7 +33,7 @@ const LoginContent: FC = () => {
   };
 
   return (
-    <Card className="beauty-shadow-lg relative z-10 mx-4 w-full max-w-md border border-border/30 bg-card/80 p-8 backdrop-blur-xl md:p-10">
+    <Card className="beauty-shadow-lg p-8 md:p-10">
       <div className="space-y-6">
         {/* Header */}
         <div className="space-y-3 text-center">
