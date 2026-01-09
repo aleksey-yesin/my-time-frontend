@@ -7,6 +7,8 @@ const twLargeShapesAnimation =
   'animate-[large-shapes-pulse_4s_ease-in-out_infinite_backwards]';
 const twGeometricShapesAnimation =
   'animate-[geometric-shapes-float_6s_ease-in-out_infinite]';
+const twPageContentShadow =
+  'shadow-[0_12px_48px_-8px_oklch(from_var(--primary)_l_c_h_/_0.18),0_6px_20px_-4px_oklch(from_var(--primary)_l_c_h_/_0.12)]';
 
 const AuthLayoutContent: FC<PropsWithChildren> = ({ children }) => {
   return (
@@ -65,7 +67,11 @@ const AuthLayoutContent: FC<PropsWithChildren> = ({ children }) => {
         )}
       />
       {/* Page content */}
-      <main className="mx-4 w-full max-w-md">{children}</main>
+      <main
+        className={cn(twPageContentShadow, 'mx-4 w-full max-w-md rounded-xl')}
+      >
+        {children}
+      </main>
     </div>
   );
 };
