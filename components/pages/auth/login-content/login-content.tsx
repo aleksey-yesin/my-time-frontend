@@ -5,9 +5,9 @@ import { useSetAtom } from 'jotai';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Card } from '@/components/ui/card';
 import { useLoginMutation } from '@/lib/api/auth.queries';
 import { setTokenPairAtom } from '@/lib/atoms/auth.atoms';
+import AppLogoIcon from '@/components/ui-custom/app-logo-icon';
 
 const LoginContent: FC = () => {
   const setTokenPair = useSetAtom(setTokenPairAtom);
@@ -37,26 +37,7 @@ const LoginContent: FC = () => {
       {/* Header */}
       <div className="space-y-3 text-center">
         <div className="beauty-gradient beauty-shadow-lg beauty-shine relative mb-2 inline-flex h-20 w-20 items-center justify-center rounded-3xl">
-          <svg
-            className="h-10 w-10 text-primary-foreground"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            strokeWidth={2}
-          >
-            <circle cx="13" cy="13" r="9" strokeWidth={2.5} />
-            <path
-              d="M8 13l3 3 6-6"
-              strokeWidth={2.5}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <path
-              d="M2 4h6M2 8h4M2 12h3"
-              strokeWidth={2}
-              strokeLinecap="round"
-            />
-          </svg>
+          <AppLogoIcon className="h-10 w-10 text-primary-foreground" />
         </div>
         <h1 className="beauty-gradient-text text-4xl font-bold tracking-tight text-balance md:text-5xl">
           {'My Service'}
