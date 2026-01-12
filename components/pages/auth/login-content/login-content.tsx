@@ -49,26 +49,20 @@ const LoginContent: FC = () => {
       {/* Form */}
       <form onSubmit={handleSubmit} className="space-y-5">
         <div className="space-y-2.5">
-          <Label htmlFor="email" className="font-medium text-foreground/90">
+          <Label htmlFor="email" className="text-foreground/90">
             Email
           </Label>
           <Input
             id="email"
-            type="email"
             placeholder="your@email.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="beauty-glow h-12 border-border/40 bg-input/50 backdrop-blur-sm transition-all duration-300 focus:border-primary/50"
-            required
           />
         </div>
 
         <div className="space-y-2.5">
           <div className="flex items-center justify-between">
-            <Label
-              htmlFor="password"
-              className="font-medium text-foreground/90"
-            >
+            <Label htmlFor="password" className="text-foreground/90">
               Пароль
             </Label>
             <button
@@ -81,11 +75,8 @@ const LoginContent: FC = () => {
           <Input
             id="password"
             type="password"
-            placeholder="••••••••"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="beauty-glow h-12 border-border/40 bg-input/50 backdrop-blur-sm transition-all duration-300 focus:border-primary/50"
-            required
           />
         </div>
 
