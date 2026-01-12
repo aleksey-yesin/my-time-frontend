@@ -40,19 +40,17 @@ const LoginContent: FC = () => {
         <div className="mb-2 inline-flex h-20 w-20 items-center justify-center rounded-3xl bg-gradient-primary shadow-primary-lg">
           <AppLogoIcon className="h-10 w-10 text-primary-foreground" />
         </div>
-        <h1 className="beauty-gradient-text text-4xl font-bold tracking-tight text-balance md:text-5xl">
-          {'My Service'}
+        <h1 className="bg-gradient-text-primary bg-clip-text text-4xl font-bold tracking-tight text-transparent md:text-5xl">
+          My Service
         </h1>
-        <p className="text-balance text-muted-foreground">
-          {'Войдите в свой аккаунт'}
-        </p>
+        <p className="text-muted-foreground">Войдите в свой аккаунт</p>
       </div>
 
       {/* Form */}
       <form onSubmit={handleSubmit} className="space-y-5">
         <div className="space-y-2.5">
           <Label htmlFor="email" className="font-medium text-foreground/90">
-            {'Email'}
+            Email
           </Label>
           <Input
             id="email"
@@ -71,13 +69,13 @@ const LoginContent: FC = () => {
               htmlFor="password"
               className="font-medium text-foreground/90"
             >
-              {'Пароль'}
+              Пароль
             </Label>
             <button
               type="button"
               className="text-sm font-medium text-primary transition-colors hover:text-secondary"
             >
-              {'Забыли?'}
+              Забыли?
             </button>
           </div>
           <Input
@@ -95,7 +93,7 @@ const LoginContent: FC = () => {
           type="submit"
           className="beauty-gradient beauty-shadow beauty-shine mt-6 h-12 w-full text-base font-semibold text-primary-foreground transition-all duration-300 hover:opacity-90"
         >
-          {'Войти'}
+          Войти
         </Button>
       </form>
 
@@ -106,7 +104,7 @@ const LoginContent: FC = () => {
         </div>
         <div className="relative flex justify-center text-xs uppercase">
           <span className="bg-card/80 px-3 font-medium text-muted-foreground backdrop-blur-sm">
-            {'или'}
+            или
           </span>
         </div>
       </div>
@@ -117,17 +115,17 @@ const LoginContent: FC = () => {
         className="h-12 w-full border-border/40 bg-transparent font-medium transition-all duration-300 hover:border-primary/40 hover:bg-muted/50 hover:text-foreground"
       >
         <GoogleIcon className="mr-2.5 size-5" />
-        {'Продолжить с Google'}
+        Продолжить с Google
       </Button>
 
       {/* Sign up link */}
       <p className="pt-2 text-center text-sm text-muted-foreground">
-        {'Еще нет аккаунта? '}
+        Еще нет аккаунта?{' '}
         <button
           type="button"
           className="font-semibold text-primary transition-colors hover:text-secondary"
         >
-          {'Создать бесплатно'}
+          Создать бесплатно
         </button>
       </p>
     </div>

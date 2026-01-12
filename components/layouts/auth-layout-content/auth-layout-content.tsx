@@ -61,7 +61,7 @@ const AuthLayoutContent: FC<PropsWithChildren> = ({ children }) => {
         )}
       />
       {/* Page content */}
-      <main className="mx-4 w-full max-w-md rounded-xl shadow-primary-lg">
+      <main className="z-10 mx-4 w-full max-w-md rounded-xl bg-card/80 shadow-primary-lg">
         {children}
       </main>
     </div>
