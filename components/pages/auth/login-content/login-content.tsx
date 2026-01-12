@@ -37,7 +37,7 @@ const LoginContent: FC = () => {
     <div className="space-y-6 p-8 md:p-10">
       {/* Header */}
       <div className="space-y-3 text-center">
-        <div className="beauty-gradient beauty-shadow-lg beauty-shine relative mb-2 inline-flex h-20 w-20 items-center justify-center rounded-3xl">
+        <div className="mb-2 inline-flex h-20 w-20 items-center justify-center rounded-3xl bg-gradient-primary shadow-primary-lg">
           <AppLogoIcon className="h-10 w-10 text-primary-foreground" />
         </div>
         <h1 className="beauty-gradient-text text-4xl font-bold tracking-tight text-balance md:text-5xl">

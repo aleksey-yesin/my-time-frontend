@@ -1,14 +1,10 @@
 import { FC, PropsWithChildren } from 'react';
 import { cn } from '@/lib/utils';
 
-const twLargeShapesGradient =
-  'bg-[linear-gradient(135deg,oklch(from_var(--primary)_l_c_h_/_0.15)_0%,oklch(from_var(--secondary)_l_c_h_/_0.12)_50%,oklch(from_var(--accent)_l_c_h_/_0.1)_100%)]';
 const twLargeShapesAnimation =
   'animate-[large-shapes-pulse_4s_ease-in-out_infinite_backwards]';
 const twGeometricShapesAnimation =
   'animate-[geometric-shapes-float_6s_ease-in-out_infinite]';
-const twPageContentShadow =
-  'shadow-[0_12px_48px_-8px_oklch(from_var(--primary)_l_c_h_/_0.18),0_6px_20px_-4px_oklch(from_var(--primary)_l_c_h_/_0.12)]';
 
 const AuthLayoutContent: FC<PropsWithChildren> = ({ children }) => {
   return (
@@ -29,16 +25,14 @@ const AuthLayoutContent: FC<PropsWithChildren> = ({ children }) => {
       {/* Large background shapes */}
       <div
         className={cn(
-          twLargeShapesGradient,
           twLargeShapesAnimation,
-          'absolute top-[-10%] right-[-5%] h-175 w-175 rounded-full blur-3xl',
+          'absolute top-[-10%] right-[-5%] h-175 w-175 rounded-full bg-gradient-primary-soft blur-3xl',
         )}
       />
       <div
         className={cn(
-          twLargeShapesGradient,
           twLargeShapesAnimation,
-          'absolute bottom-[-15%] left-[-10%] h-200 w-200 rounded-full blur-3xl delay-2000',
+          'absolute bottom-[-15%] left-[-10%] h-200 w-200 rounded-full bg-gradient-primary-soft blur-3xl delay-2000',
         )}
       />
       {/* Floating geometric shapes */}
@@ -67,9 +61,7 @@ const AuthLayoutContent: FC<PropsWithChildren> = ({ children }) => {
         )}
       />
       {/* Page content */}
-      <main
-        className={cn(twPageContentShadow, 'mx-4 w-full max-w-md rounded-xl')}
-      >
+      <main className="mx-4 w-full max-w-md rounded-xl shadow-primary-lg">
         {children}
       </main>
     </div>
