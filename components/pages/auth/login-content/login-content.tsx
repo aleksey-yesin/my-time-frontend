@@ -49,9 +49,7 @@ const LoginContent: FC = () => {
       {/* Form */}
       <form onSubmit={handleSubmit} className="space-y-5">
         <div className="space-y-2.5">
-          <Label htmlFor="email" className="text-foreground/90">
-            Email
-          </Label>
+          <Label htmlFor="email">Email</Label>
           <Input
             id="email"
             placeholder="your@email.com"
@@ -62,15 +60,10 @@ const LoginContent: FC = () => {
 
         <div className="space-y-2.5">
           <div className="flex items-center justify-between">
-            <Label htmlFor="password" className="text-foreground/90">
-              Пароль
-            </Label>
-            <button
-              type="button"
-              className="text-sm font-medium text-primary transition-colors hover:text-secondary"
-            >
+            <Label htmlFor="password">Пароль</Label>
+            <Button variant="link" className="h-5" type="button">
               Забыли?
-            </button>
+            </Button>
           </div>
           <Input
             id="password"
@@ -82,7 +75,8 @@ const LoginContent: FC = () => {
 
         <Button
           type="submit"
-          className="beauty-gradient beauty-shadow beauty-shine mt-6 h-12 w-full text-base font-semibold text-primary-foreground transition-all duration-300 hover:opacity-90"
+          variant="default-gradient"
+          className="mt-6 h-12 w-full text-base font-semibold"
         >
           Войти
         </Button>
