@@ -4,15 +4,15 @@ import { Slot } from 'radix-ui';
 import { cn } from '@/lib/utils';
 
 const buttonVariants = cva(
-  "focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:aria-invalid:border-destructive/50 rounded-md border border-transparent bg-clip-padding text-sm font-medium focus-visible:ring-[3px] aria-invalid:ring-[3px] [&_svg:not([class*='size-'])]:size-4 inline-flex items-center justify-center whitespace-nowrap transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none shrink-0 [&_svg]:shrink-0 outline-none group/button select-none",
+  "focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:aria-invalid:border-destructive/50 rounded-md border border-transparent bg-clip-padding text-sm font-medium focus-visible:ring-[3px] aria-invalid:ring-[3px] [&_svg:not([class*='size-'])]:size-4 inline-flex items-center justify-center whitespace-nowrap transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none shrink-0 [&_svg]:shrink-0 outline-none group/button select-none duration-300",
   {
     variants: {
       variant: {
         default: 'bg-primary text-primary-foreground hover:bg-primary/80',
         'default-gradient':
-          'bg-gradient-primary text-primary-foreground shadow-primary duration-300 hover:opacity-90',
+          'bg-gradient-primary text-primary-foreground shadow-primary hover:opacity-90',
         outline:
-          'border-border bg-background hover:bg-muted hover:text-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 aria-expanded:bg-muted aria-expanded:text-foreground shadow-xs',
+          'border-border/40 bg-transparent hover:bg-muted/50 hover:text-foreground hover:border-primary/40 dark:bg-input/30 dark:border-input dark:hover:bg-input/50 aria-expanded:bg-muted aria-expanded:text-foreground shadow-xs',
         secondary:
           'bg-secondary text-secondary-foreground hover:bg-secondary/80 aria-expanded:bg-secondary aria-expanded:text-secondary-foreground',
         ghost:
@@ -70,7 +70,14 @@ export { Button, buttonVariants };
 /******************************************************************************
  * Changes
  *
+ * Button base
+ * ADD: 'duration-300'
+ *
  * ADD: variant 'default-gradient'
+ *
+ * variant 'outline'
+ * DEL: 'border-border bg-background hover:bg-muted'
+ * ADD: 'border-border/40 bg-transparent hover:bg-muted/50 hover:border-primary/40'
  *
  * variant 'link'
  * DEL: 'underline-offset-4 hover:underline'

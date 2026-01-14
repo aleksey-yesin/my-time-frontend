@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useAtomValue } from 'jotai';
 import { isAuthenticatedAtom, hasHydratedAtom } from '@/lib/atoms/auth.atoms';
 
-const redirectPath = '/auth/login';
+const redirectPath = '/login';
 
 const PrivateAccess: FC<PropsWithChildren> = ({ children }) => {
   const router = useRouter();
