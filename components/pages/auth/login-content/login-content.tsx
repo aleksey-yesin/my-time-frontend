@@ -1,20 +1,17 @@
 'use client';
 
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { useSetAtom } from 'jotai';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { useLoginMutation } from '@/lib/api/auth.queries';
 import { setTokenPairAtom } from '@/lib/atoms/auth.atoms';
-import AppLogoIcon from '@/components/ui-custom/app-logo-icon';
 import GoogleIcon from './google-icon';
+import LoginDivider from './login-divider';
+import LoginContentHeader from './login-content-header';
+import LoginForm from './login-form';
 
 const LoginContent: FC = () => {
   const setTokenPair = useSetAtom(setTokenPairAtom);
-
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
 
   const { mutate: login } = useLoginMutation({
     onSuccess: (data) => {
@@ -25,8 +22,7 @@ const LoginContent: FC = () => {
     },
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = () => {
     login({
       email: 'vpupkin@hello.com',
       password: 'vhello',
@@ -35,64 +31,11 @@ const LoginContent: FC = () => {
 
   return (
     <div className="space-y-6 p-8 md:p-10">
-      {/* Header */}
-      <div className="space-y-3 text-center">
-        <div className="mb-2 inline-flex h-20 w-20 items-center justify-center rounded-3xl bg-gradient-primary shadow-primary-lg">
-          <AppLogoIcon className="h-10 w-10 text-primary-foreground" />
-        </div>
-        <h1 className="bg-gradient-text-primary bg-clip-text text-4xl font-bold tracking-tight text-transparent md:text-5xl">
-          My Service
-        </h1>
-        <p className="text-muted-foreground">Войдите в свой аккаунт</p>
-      </div>
+      <LoginContentHeader />
 
-      {/* Form */}
-      <form onSubmit={handleSubmit} className="space-y-5">
-        <div className="space-y-2.5">
-          <Label htmlFor="email">Email</Label>
-          <Input
-            id="email"
-            placeholder="your@email.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
+      <LoginForm onSubmit={handleSubmit} />
 
-        <div className="space-y-2.5">
-          <div className="flex items-center justify-between">
-            <Label htmlFor="password">Пароль</Label>
-            <Button variant="link" className="h-5" type="button">
-              Забыли?
-            </Button>
-          </div>
-          <Input
-            id="password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-
-        <Button
-          type="submit"
-          variant="default-gradient"
-          className="mt-6 h-12 w-full text-base font-semibold"
-        >
-          Войти
-        </Button>
-      </form>
-
-      {/* Divider */}
-      <div className="relative py-3">
-        <div className="absolute inset-0 flex items-center">
-          <div className="w-full border-t border-border/40" />
-        </div>
-        <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-card/80 px-3 font-medium text-muted-foreground backdrop-blur-sm">
-            или
-          </span>
-        </div>
-      </div>
+      <LoginDivider />
 
       <Button
         type="button"
