@@ -12,7 +12,7 @@ const LoginContentHeader: FC = () => {
       <h1 className="bg-gradient-text-primary bg-clip-text text-4xl font-bold tracking-tight text-transparent md:text-5xl">
         My Service
       </h1>
-      <p className="text-muted-foreground">Войдите в свой аккаунт</p>
+      <p className="text-muted-foreground">Увійдіть у свій аккаунт</p>
     </div>
   );
 };

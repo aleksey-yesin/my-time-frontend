@@ -27,11 +27,7 @@ const LoginForm: FC<Props> = ({ onSubmit }) => {
   });
 
   return (
-    <form
-      className="space-y-5"
-      id="login-form"
-      onSubmit={form.handleSubmit(onSubmit)}
-    >
+    <form className="space-y-5" onSubmit={form.handleSubmit(onSubmit)}>
       <Controller
         name="email"
         control={form.control}
@@ -72,11 +68,11 @@ const LoginForm: FC<Props> = ({ onSubmit }) => {
         )}
       />
       <Button
-        type="submit"
         variant="default-gradient"
         className="mt-6 h-12 w-full text-base font-semibold"
+        type="submit"
       >
-        Войти
+        Увійти
       </Button>
     </form>
   );

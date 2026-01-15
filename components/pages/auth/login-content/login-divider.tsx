@@ -10,7 +10,7 @@ const LoginDivider: FC = () => {
       {/* Text */}
       <div className="relative flex justify-center">
         <p className="bg-card px-3 text-xs font-medium text-muted-foreground uppercase">
-          или
+          або
         </p>
       </div>
     </div>

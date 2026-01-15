@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 const LoginContentFooter: FC = () => {
   return (
     <div className="flex justify-center pt-2">
-      <p className="text-sm text-muted-foreground">Еще нет аккаунта?</p>
+      <p className="text-sm text-muted-foreground">Ще нема акаунту?</p>
 
       <Button
         variant="link"
@@ -13,7 +13,7 @@ const LoginContentFooter: FC = () => {
         type="button"
         asChild
       >
-        <Link href="/registration">Создать бесплатно</Link>
+        <Link href="/registration">Створити безкоштовно</Link>
       </Button>
     </div>
   );
