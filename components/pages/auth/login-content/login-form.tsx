@@ -39,7 +39,6 @@ const LoginForm: FC<Props> = ({ onSubmit }) => {
               id="login-form-email"
               aria-invalid={fieldState.invalid}
               placeholder="your@email.com"
-              autoComplete="off"
             />
             {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
           </Field>
@@ -61,7 +60,6 @@ const LoginForm: FC<Props> = ({ onSubmit }) => {
               id="login-form-password"
               aria-invalid={fieldState.invalid}
               type="password"
-              autoComplete="off"
             />
             {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
           </Field>

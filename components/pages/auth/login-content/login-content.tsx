@@ -22,17 +22,10 @@ const LoginContent: FC = () => {
     },
   });
 
-  const handleSubmit = () => {
-    login({
-      email: 'vpupkin@hello.com',
-      password: 'vhello',
-    });
-  };
-
   return (
     <div className="space-y-6 p-8 md:p-10">
       <LoginContentHeader />
-      <LoginForm onSubmit={handleSubmit} />
+      <LoginForm onSubmit={login} />
       <LoginDivider />
       <GoogleButton />
       <LoginContentFooter />
