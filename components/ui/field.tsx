@@ -43,7 +43,7 @@ function FieldGroup({ className, ...props }: React.ComponentProps<'div'>) {
     <div
       data-slot="field-group"
       className={cn(
-        'group/field-group @container/field-group flex w-full flex-col gap-7 data-[slot=checkbox-group]:gap-3 [&>[data-slot=field-group]]:gap-4',
+        'group/field-group @container/field-group flex w-full flex-col gap-5 data-[slot=checkbox-group]:gap-3 [&>[data-slot=field-group]]:gap-4',
         className,
       )}
       {...props}
@@ -106,7 +106,7 @@ function FieldLabel({
     <Label
       data-slot="field-label"
       className={cn(
-        'group/field-label peer/field-label flex w-fit gap-2 leading-snug group-data-[disabled=true]/field:opacity-50 has-data-checked:border-primary has-data-checked:bg-primary/5 has-[>[data-slot=field]]:rounded-md has-[>[data-slot=field]]:border dark:has-data-checked:bg-primary/10 [&>*]:data-[slot=field]:p-3',
+        'group/field-label peer/field-label flex w-fit gap-2 leading-snug group-data-[disabled=true]/field:opacity-50 group-data-[invalid=true]/field:text-inherit has-data-checked:border-primary has-data-checked:bg-primary/5 has-[>[data-slot=field]]:rounded-md has-[>[data-slot=field]]:border dark:has-data-checked:bg-primary/10 [&>*]:data-[slot=field]:p-3',
         'has-[>[data-slot=field]]:w-full has-[>[data-slot=field]]:flex-col',
         className,
       )}
@@ -240,7 +240,14 @@ export {
 /******************************************************************************
  * Changes
  *
+ * FieldGroup className
+ * DEL: 'gap-7'
+ * ADD: 'gap-5'
+ *
  * Field base
  * DEL: 'gap-3'
  * ADD: 'gap-2.5'
+ *
+ * FieldLabel className
+ * ADD: 'group-data-[invalid=true]/field:text-inherit'
  */
