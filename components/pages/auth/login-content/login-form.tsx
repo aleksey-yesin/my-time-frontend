@@ -1,51 +1,76 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
+import z from 'zod';
+import { Controller, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { Field, FieldError, FieldLabel } from '@/components/ui/field';
 
-export interface LoginFormValues {
-  email: string;
-  password: string;
-}
+const schema = z.object({
+  email: z.email({ message: 'Введіть валідний email' }),
+  password: z.string().min(3, { message: 'Мінімум 3 символи' }),
+});
+
+export type LoginFormValues = z.infer<typeof schema>;
+
 interface Props {
   onSubmit: (values: LoginFormValues) => void;
 }
 
 const LoginForm: FC<Props> = ({ onSubmit }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const form = useForm<LoginFormValues>({
+    resolver: zodResolver(schema),
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  });
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    onSubmit({ email, password });
-  };
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
-      <div className="space-y-2.5">
-        <Label htmlFor="email">Email</Label>
-        <Input
-          id="email"
-          placeholder="your@email.com"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-      </div>
-
-      <div className="space-y-2.5">
-        <div className="flex items-center justify-between">
-          <Label htmlFor="password">Пароль</Label>
-          <Button variant="link" className="h-5" type="button">
-            Забыли?
-          </Button>
-        </div>
-        <Input
-          id="password"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </div>
-
+    <form
+      className="space-y-5"
+      id="login-form"
+      onSubmit={form.handleSubmit(onSubmit)}
+    >
+      <Controller
+        name="email"
+        control={form.control}
+        render={({ field, fieldState }) => (
+          <Field data-invalid={fieldState.invalid}>
+            <FieldLabel htmlFor="login-form-email">Email</FieldLabel>
+            <Input
+              {...field}
+              id="login-form-email"
+              aria-invalid={fieldState.invalid}
+              placeholder="your@email.com"
+              autoComplete="off"
+            />
+            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+          </Field>
+        )}
+      />
+      <Controller
+        name="password"
+        control={form.control}
+        render={({ field, fieldState }) => (
+          <Field data-invalid={fieldState.invalid}>
+            <div className="flex items-center justify-between">
+              <FieldLabel htmlFor="login-form-password">Пароль</FieldLabel>
+              <Button variant="link" className="h-5" type="button">
+                Забули?
+              </Button>
+            </div>
+            <Input
+              {...field}
+              id="login-form-password"
+              aria-invalid={fieldState.invalid}
+              type="password"
+              autoComplete="off"
+            />
+            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+          </Field>
+        )}
+      />
       <Button
         type="submit"
         variant="default-gradient"
