@@ -1,18 +1,15 @@
 import { FC } from 'react';
-import { useAtom, useSetAtom } from 'jotai';
+import { useAtomValue, useSetAtom } from 'jotai';
 import { Button } from '@/components/ui/button';
-import { accessTokenAtom, refreshTokenAtom } from '@/lib/atoms/auth.atoms';
+import { refreshTokenAtom, unsetTokenPairAtom } from '@/lib/atoms/auth.atoms';
 import { useLogoutMutation } from '@/lib/api/auth.queries';
 
 const DashboardHeader: FC = () => {
-  const setAccessToken = useSetAtom(accessTokenAtom);
-  const [refreshToken, setRefreshToken] = useAtom(refreshTokenAtom);
+  const refreshToken = useAtomValue(refreshTokenAtom);
+  const unsetTokenPair = useSetAtom(unsetTokenPairAtom);
 
   const { mutate: logout } = useLogoutMutation({
-    onSuccess: () => {
-      setAccessToken(null);
-      setRefreshToken(null);
-    },
+    onSuccess: unsetTokenPair,
   });
 
   const handleLogout = () => {

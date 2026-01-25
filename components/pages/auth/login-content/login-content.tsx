@@ -2,31 +2,33 @@
 
 import { FC } from 'react';
 import { useSetAtom } from 'jotai';
-import { Button } from '@/components/ui/button';
 import { useLoginMutation } from '@/lib/api/auth.queries';
-import { accessTokenAtom, refreshTokenAtom } from '@/lib/atoms/auth.atoms';
+import { setTokenPairAtom } from '@/lib/atoms/auth.atoms';
+import LoginDivider from './login-divider';
+import LoginContentHeader from './login-content-header';
+import LoginForm from './login-form';
+import GoogleButton from './google-button/google-button';
+import LoginContentFooter from './login-content-footer';
 
 const LoginContent: FC = () => {
-  const setAccessToken = useSetAtom(accessTokenAtom);
-  const setRefreshToken = useSetAtom(refreshTokenAtom);
+  const setTokenPair = useSetAtom(setTokenPairAtom);
 
-  const { mutate } = useLoginMutation({
+  const { mutate: login } = useLoginMutation({
     onSuccess: (data) => {
-      setAccessToken(data.access_token);
-      setRefreshToken(data.refresh_token);
+      setTokenPair({
+        access: data.access_token,
+        refresh: data.refresh_token,
+      });
     },
   });
 
-  const handleSubmit = () => {
-    mutate({
-      email: 'vpupkin@hello.com',
-      password: 'vhello',
-    });
-  };
-
   return (
-    <div>
-      <Button onClick={handleSubmit}>Login</Button>
+    <div className="space-y-6 p-8 md:p-10">
+      <LoginContentHeader />
+      <LoginForm onSubmit={login} />
+      <LoginDivider />
+      <GoogleButton />
+      <LoginContentFooter />
     </div>
   );
 };
