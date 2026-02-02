@@ -72,3 +72,33 @@ export const useLogoutAllMutation = (
     ...mutationOptions,
   });
 };
+
+// ****************************************************************************
+// Register Mutation
+
+export interface RegisterParams {
+  email: string;
+  password: string;
+}
+export interface RegisterResponse {
+  access_token: string;
+  refresh_token: string;
+}
+
+export const useRegisterMutation = (
+  mutationOptions?: UseMutationOptions<RegisterResponse, Error, RegisterParams>,
+) => {
+  const apiFetch = useApiFetch();
+
+  return useMutation({
+    mutationFn: async (params) => {
+      const response = await apiFetch('/auth/register', {
+        method: 'POST',
+        body: JSON.stringify(params),
+        skipAuth: true,
+      });
+      return response.json();
+    },
+    ...mutationOptions,
+  });
+};
