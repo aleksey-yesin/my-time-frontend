@@ -13,8 +13,13 @@ import {
 
 const schema = z
   .object({
-    email: z.email({ message: 'Введіть валідний email' }),
-    password: z.string().min(6, { message: 'Мінімум 6 символів' }),
+    email: z.string().email({ message: 'Введіть валідний email' }),
+    password: z
+      .string()
+      .min(8, { message: 'Мінімум 8 символів' })
+      .regex(/[a-z]/, { message: 'Потрібна мінімум 1 строчна буква' })
+      .regex(/[A-Z]/, { message: 'Потрібна мінімум 1 заглавна буква' })
+      .regex(/[0-9]/, { message: 'Потрібна мінімум 1 цифра' }),
     confirmPassword: z.string().min(1, { message: 'Підтвердіть пароль' }),
   })
   .refine((data) => data.password === data.confirmPassword, {
@@ -77,7 +82,7 @@ const RegistrationForm: FC<Props> = ({ onSubmit }) => {
                 id="registration-form-password"
                 aria-invalid={fieldState.invalid}
                 type="password"
-                placeholder="Мінімум 6 символів"
+                placeholder="Мінімум 8 символів, 1 заглавна, 1 строчна, 1 цифра"
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
