@@ -39,7 +39,6 @@ export const unsetTokenPairAtom = atom(undefined, (_, set) => {
 // ****************************************************************************
 // Registration flow
 
-export const registrationSuccessParamsAtom = atom<RegisterParams | null>(null);
-export const registrationInitValuesAtom = atom<RegistrationFormValues | null>(
-  null,
-);
+export const successRegistrationParamsAtom = atom<RegisterParams | null>(null);
+export const registrationInitValuesAtom =
+  atom<Partial<RegistrationFormValues> | null>(null);

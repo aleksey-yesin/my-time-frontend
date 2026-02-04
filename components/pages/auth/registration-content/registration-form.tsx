@@ -14,13 +14,13 @@ import {
 
 const schema = z
   .object({
-    email: z.string().email({ message: 'Введіть валідний email' }),
+    email: z.email({ message: 'Введіть валідний email' }),
     password: z
       .string()
       .min(8, { message: 'Мінімум 8 символів' })
-      .regex(/[a-z]/, { message: 'Потрібна мінімум 1 строчна буква' })
-      .regex(/[A-Z]/, { message: 'Потрібна мінімум 1 заглавна буква' })
-      .regex(/[0-9]/, { message: 'Потрібна мінімум 1 цифра' }),
+      .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).*$/, {
+        message: 'Повинен містити цифри, великі та малі літери',
+      }),
     confirmPassword: z.string().min(1, { message: 'Підтвердіть пароль' }),
   })
   .refine((data) => data.password === data.confirmPassword, {
@@ -33,16 +33,21 @@ export type RegistrationFormValues = z.infer<typeof schema>;
 interface Props {
   onSubmit: (values: RegistrationFormValues) => void;
   isPending?: boolean;
-  initialValues?: RegistrationFormValues;
+  defaultValues: Partial<RegistrationFormValues> | null;
 }
 
-const RegistrationForm: FC<Props> = ({ onSubmit, isPending, initialValues }) => {
+const RegistrationForm: FC<Props> = ({
+  onSubmit,
+  isPending,
+  defaultValues,
+}) => {
   const form = useForm<RegistrationFormValues>({
     resolver: zodResolver(schema),
-    defaultValues: initialValues ?? {
+    defaultValues: {
       email: '',
       password: '',
       confirmPassword: '',
+      ...defaultValues,
     },
   });
 
