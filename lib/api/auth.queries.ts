@@ -81,8 +81,7 @@ export interface RegisterParams {
   password: string;
 }
 export interface RegisterResponse {
-  access_token: string;
-  refresh_token: string;
+  message: string;
 }
 
 export const useRegisterMutation = (
@@ -93,6 +92,64 @@ export const useRegisterMutation = (
   return useMutation({
     mutationFn: async (params) => {
       const response = await apiFetch('/auth/register', {
+        method: 'POST',
+        body: JSON.stringify(params),
+        skipAuth: true,
+      });
+      return response.json();
+    },
+    ...mutationOptions,
+  });
+};
+
+// ****************************************************************************
+// Verify Email Mutation
+
+export interface VerifyEmailParams {
+  email: string;
+  code: string;
+}
+export interface VerifyEmailResponse {
+  access_token: string;
+  refresh_token: string;
+}
+
+export const useVerifyEmailMutation = (
+  mutationOptions?: UseMutationOptions<VerifyEmailResponse, Error, VerifyEmailParams>,
+) => {
+  const apiFetch = useApiFetch();
+
+  return useMutation({
+    mutationFn: async (params) => {
+      const response = await apiFetch('/auth/verify-email', {
+        method: 'POST',
+        body: JSON.stringify(params),
+        skipAuth: true,
+      });
+      return response.json();
+    },
+    ...mutationOptions,
+  });
+};
+
+// ****************************************************************************
+// Resend Verification Code Mutation
+
+export interface ResendVerificationCodeParams {
+  email: string;
+}
+export interface ResendVerificationCodeResponse {
+  message: string;
+}
+
+export const useResendVerificationCodeMutation = (
+  mutationOptions?: UseMutationOptions<ResendVerificationCodeResponse, Error, ResendVerificationCodeParams>,
+) => {
+  const apiFetch = useApiFetch();
+
+  return useMutation({
+    mutationFn: async (params) => {
+      const response = await apiFetch('/auth/resend-verification-code', {
         method: 'POST',
         body: JSON.stringify(params),
         skipAuth: true,

@@ -2,6 +2,7 @@ import { FC } from 'react';
 import z from 'zod';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Loader2Icon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -30,13 +31,15 @@ const schema = z
 export type RegistrationFormValues = z.infer<typeof schema>;
 
 interface Props {
-  onSubmit: (values: { email: string; password: string }) => void;
+  onSubmit: (values: RegistrationFormValues) => void;
+  isPending?: boolean;
+  initialValues?: RegistrationFormValues;
 }
 
-const RegistrationForm: FC<Props> = ({ onSubmit }) => {
+const RegistrationForm: FC<Props> = ({ onSubmit, isPending, initialValues }) => {
   const form = useForm<RegistrationFormValues>({
     resolver: zodResolver(schema),
-    defaultValues: {
+    defaultValues: initialValues ?? {
       email: '',
       password: '',
       confirmPassword: '',
@@ -44,10 +47,7 @@ const RegistrationForm: FC<Props> = ({ onSubmit }) => {
   });
 
   const handleSubmit = (values: RegistrationFormValues) => {
-    onSubmit({
-      email: values.email,
-      password: values.password,
-    });
+    onSubmit(values);
   };
 
   return (
@@ -115,7 +115,9 @@ const RegistrationForm: FC<Props> = ({ onSubmit }) => {
           variant="default-gradient"
           className="h-12 w-full text-base font-semibold"
           type="submit"
+          disabled={isPending}
         >
+          {isPending && <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />}
           Зареєструватися
         </Button>
       </div>
