@@ -2,7 +2,6 @@ import { FC } from 'react';
 import z from 'zod';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Loader2Icon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -11,6 +10,7 @@ import {
   FieldGroup,
   FieldLabel,
 } from '@/components/ui/field';
+import { Spinner } from '@/components/ui/spinner';
 
 const schema = z
   .object({
@@ -32,7 +32,7 @@ export type RegistrationFormValues = z.infer<typeof schema>;
 
 interface Props {
   onSubmit: (values: RegistrationFormValues) => void;
-  isPending?: boolean;
+  isPending: boolean;
   defaultValues: Partial<RegistrationFormValues> | null;
 }
 
@@ -51,12 +51,8 @@ const RegistrationForm: FC<Props> = ({
     },
   });
 
-  const handleSubmit = (values: RegistrationFormValues) => {
-    onSubmit(values);
-  };
-
   return (
-    <form className="space-y-11" onSubmit={form.handleSubmit(handleSubmit)}>
+    <form className="space-y-11" onSubmit={form.handleSubmit(onSubmit)}>
       <FieldGroup>
         <Controller
           name="email"
@@ -118,11 +114,11 @@ const RegistrationForm: FC<Props> = ({
       <div>
         <Button
           variant="default-gradient"
-          className="h-12 w-full text-base font-semibold"
+          className="h-12 w-full gap-3.5 text-base font-semibold"
           type="submit"
           disabled={isPending}
         >
-          {isPending && <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />}
+          {isPending && <Spinner />}
           Зареєструватися
         </Button>
       </div>

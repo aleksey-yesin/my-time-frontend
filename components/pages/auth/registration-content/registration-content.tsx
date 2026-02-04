@@ -51,7 +51,7 @@ const RegistrationContent: FC = () => {
   };
 
   useEffect(() => {
-    // Form won't change values after mount
+    // RHF won't change values after mount
     setRegistrationInitValues(null);
   }, [setRegistrationInitValues]);
 
