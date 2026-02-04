@@ -1,6 +1,17 @@
 import { FC } from 'react';
 
-const LoginDivider: FC = () => {
+/******************************************************************************
+ * This component needs to be revised to:
+ * - use Separator from shadcn (?)
+ * - improve semantics
+ * - simplify
+ */
+
+export interface SeparatorWithTextProps {
+  text: string;
+}
+
+const SeparatorWithText: FC<SeparatorWithTextProps> = ({ text }) => {
   return (
     <div className="relative py-3">
       {/* Line */}
@@ -10,11 +21,11 @@ const LoginDivider: FC = () => {
       {/* Text */}
       <div className="relative flex justify-center">
         <p className="bg-card px-3 text-xs font-medium text-muted-foreground uppercase">
-          або
+          {text}
         </p>
       </div>
     </div>
   );
 };
 
-export default LoginDivider;
+export default SeparatorWithText;

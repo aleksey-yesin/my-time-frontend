@@ -4,10 +4,10 @@ import { FC } from 'react';
 import { useSetAtom } from 'jotai';
 import { useLoginMutation } from '@/lib/api/auth.queries';
 import { setTokenPairAtom } from '@/lib/atoms/auth.atoms';
-import LoginDivider from './login-divider';
+import SeparatorWithText from '@/components/ui-custom/separator-with-text';
+import GoogleButton from '@/components/ui-custom/google-button/google-button';
 import LoginContentHeader from './login-content-header';
 import LoginForm from './login-form';
-import GoogleButton from './google-button/google-button';
 import LoginContentFooter from './login-content-footer';
 
 const LoginContent: FC = () => {
@@ -26,7 +26,7 @@ const LoginContent: FC = () => {
     <div className="space-y-6 p-8 md:p-10">
       <LoginContentHeader />
       <LoginForm onSubmit={login} />
-      <LoginDivider />
+      <SeparatorWithText text="або" />
       <GoogleButton />
       <LoginContentFooter />
     </div>

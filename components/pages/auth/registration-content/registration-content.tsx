@@ -5,16 +5,18 @@ import { useRouter } from 'next/navigation';
 import { useAtom } from 'jotai';
 import { toast } from 'sonner';
 import { useRegisterMutation } from '@/lib/api/auth.queries';
-import { registrationFormDataAtom } from '@/lib/atoms/registration.atoms';
+import { registrationInitValuesAtom } from '@/lib/atoms/auth.atoms';
+import SeparatorWithText from '@/components/ui-custom/separator-with-text';
+import GoogleButton from '@/components/ui-custom/google-button/google-button';
 import RegistrationContentHeader from './registration-content-header';
 import RegistrationForm, { RegistrationFormValues } from './registration-form';
-import RegistrationDivider from './registration-divider';
-import GoogleButton from '../login-content/google-button/google-button';
 import RegistrationContentFooter from './registration-content-footer';
 
 const RegistrationContent: FC = () => {
   const router = useRouter();
-  const [registrationFormData, setRegistrationFormData] = useAtom(registrationFormDataAtom);
+  const [registrationFormData, setRegistrationFormData] = useAtom(
+    registrationInitValuesAtom,
+  );
 
   const { mutate: register, isPending } = useRegisterMutation({
     onSuccess: (_, variables) => {
@@ -25,7 +27,10 @@ const RegistrationContent: FC = () => {
       router.push(`/verify-email?email=${encodeURIComponent(variables.email)}`);
     },
     onError: (error) => {
-      if (error.message.includes('already exists') || error.message.includes('вже існує')) {
+      if (
+        error.message.includes('already exists') ||
+        error.message.includes('вже існує')
+      ) {
         toast.error('Користувач з таким email вже існує', {
           description: 'Спробуйте увійти або скористайтеся іншим email.',
           action: {
@@ -71,7 +76,7 @@ const RegistrationContent: FC = () => {
         isPending={isPending}
         initialValues={initialValues}
       />
-      <RegistrationDivider />
+      <SeparatorWithText text="або" />
       <GoogleButton />
       <RegistrationContentFooter />
     </div>

@@ -5,8 +5,10 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useAtom, useSetAtom } from 'jotai';
 import { toast } from 'sonner';
 import { useVerifyEmailMutation } from '@/lib/api/auth.queries';
-import { setTokenPairAtom } from '@/lib/atoms/auth.atoms';
-import { registrationFormDataAtom } from '@/lib/atoms/registration.atoms';
+import {
+  registrationInitValuesAtom,
+  setTokenPairAtom,
+} from '@/lib/atoms/auth.atoms';
 import VerifyEmailContentHeader from './verify-email-content-header';
 import VerifyEmailForm from './verify-email-form';
 import VerifyEmailResendButton from './verify-email-resend-button';
@@ -19,7 +21,9 @@ const VerifyEmailContent: FC = () => {
   const initialCode = searchParams.get('code') || '';
 
   const setTokenPair = useSetAtom(setTokenPairAtom);
-  const [registrationFormData, setRegistrationFormData] = useAtom(registrationFormDataAtom);
+  const [registrationFormData, setRegistrationFormData] = useAtom(
+    registrationInitValuesAtom,
+  );
 
   const { mutate: verifyEmail, isPending } = useVerifyEmailMutation({
     onSuccess: (data) => {
@@ -31,13 +35,20 @@ const VerifyEmailContent: FC = () => {
       setRegistrationFormData(null);
     },
     onError: (error) => {
-      if (error.message.includes('invalid') || error.message.includes('невірний')) {
+      if (
+        error.message.includes('invalid') ||
+        error.message.includes('невірний')
+      ) {
         toast.error('Невірний код підтвердження', {
           description: 'Перевірте код та спробуйте ще раз.',
         });
-      } else if (error.message.includes('expired') || error.message.includes('закінчився')) {
+      } else if (
+        error.message.includes('expired') ||
+        error.message.includes('закінчився')
+      ) {
         toast.error('Код підтвердження застарів', {
-          description: 'Натисніть "Надіслати код повторно" для отримання нового коду.',
+          description:
+            'Натисніть "Надіслати код повторно" для отримання нового коду.',
         });
       } else {
         toast.error('Помилка підтвердження', {

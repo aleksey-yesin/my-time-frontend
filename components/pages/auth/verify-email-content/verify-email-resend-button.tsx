@@ -4,7 +4,7 @@ import { FC, useState, useEffect, useCallback } from 'react';
 import { Loader2Icon } from 'lucide-react';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
-import { useResendVerificationCodeMutation } from '@/lib/api/auth.queries';
+import { useResendEmailVerificationCodeMutation } from '@/lib/api/auth.queries';
 
 const COUNTDOWN_SECONDS = 60;
 
@@ -15,19 +15,20 @@ interface Props {
 const VerifyEmailResendButton: FC<Props> = ({ email }) => {
   const [countdown, setCountdown] = useState(COUNTDOWN_SECONDS);
 
-  const { mutate: resendCode, isPending } = useResendVerificationCodeMutation({
-    onSuccess: () => {
-      toast.success('Код надіслано', {
-        description: 'Перевірте вашу електронну пошту.',
-      });
-      setCountdown(COUNTDOWN_SECONDS);
-    },
-    onError: (error) => {
-      toast.error('Помилка надсилання коду', {
-        description: error.message,
-      });
-    },
-  });
+  const { mutate: resendCode, isPending } =
+    useResendEmailVerificationCodeMutation({
+      onSuccess: () => {
+        toast.success('Код надіслано', {
+          description: 'Перевірте вашу електронну пошту.',
+        });
+        setCountdown(COUNTDOWN_SECONDS);
+      },
+      onError: (error) => {
+        toast.error('Помилка надсилання коду', {
+          description: error.message,
+        });
+      },
+    });
 
   useEffect(() => {
     if (countdown <= 0) return;
