@@ -9,7 +9,7 @@ const RegistrationContentFooter: FC = () => {
 
       <Button
         variant="link"
-        className="h-5 px-1 font-semibold"
+        className="h-5 cursor-default px-1 font-semibold"
         type="button"
         asChild
       >

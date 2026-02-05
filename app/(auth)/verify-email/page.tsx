@@ -1,10 +1,19 @@
+import { FC } from 'react';
+import { redirect } from 'next/navigation';
 import VerifyEmailContent from '@/components/pages/auth/verify-email-content/verify-email-content';
 
-export const metadata = {
-  title: 'Підтвердження email | My Service',
-  description: 'Підтвердіть вашу електронну пошту',
+interface Props {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}
+
+const VerifyEmailPage: FC<Props> = async ({ searchParams }) => {
+  const { email } = await searchParams;
+
+  if (typeof email !== 'string') {
+    redirect('/registration');
+  }
+
+  return <VerifyEmailContent searchEmail={email} />;
 };
 
-export default function VerifyEmailPage() {
-  return <VerifyEmailContent />;
-}
+export default VerifyEmailPage;
