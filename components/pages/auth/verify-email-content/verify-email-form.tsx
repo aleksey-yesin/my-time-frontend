@@ -1,7 +1,4 @@
-'use client';
-
-import { FC, useState, useEffect } from 'react';
-import { Loader2Icon } from 'lucide-react';
+import { FC } from 'react';
 import { REGEXP_ONLY_DIGITS } from 'input-otp';
 import { Button } from '@/components/ui/button';
 import {
@@ -9,28 +6,24 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from '@/components/ui/input-otp';
+import { Spinner } from '@/components/ui/spinner';
 
 interface Props {
-  onSubmit: (code: string) => void;
-  isPending?: boolean;
-  initialCode?: string;
+  code: string;
+  onCodeChange: (newCode: string) => void;
+  onSubmit: () => void;
+  isPending: boolean;
 }
 
-const VerifyEmailForm: FC<Props> = ({ onSubmit, isPending, initialCode = '' }) => {
-  const [code, setCode] = useState(initialCode);
-
-  // Auto-submit when 6 digits are entered
-  useEffect(() => {
-    if (code.length === 6 && !isPending) {
-      onSubmit(code);
-    }
-  }, [code, onSubmit, isPending]);
-
+const VerifyEmailForm: FC<Props> = ({
+  code,
+  onCodeChange,
+  onSubmit,
+  isPending,
+}) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (code.length === 6) {
-      onSubmit(code);
-    }
+    onSubmit();
   };
 
   return (
@@ -39,28 +32,29 @@ const VerifyEmailForm: FC<Props> = ({ onSubmit, isPending, initialCode = '' }) =
         <InputOTP
           maxLength={6}
           value={code}
-          onChange={setCode}
+          onChange={onCodeChange}
           pattern={REGEXP_ONLY_DIGITS}
-          disabled={isPending}
         >
           <InputOTPGroup>
-            <InputOTPSlot index={0} className="h-12 w-12 text-lg" />
-            <InputOTPSlot index={1} className="h-12 w-12 text-lg" />
-            <InputOTPSlot index={2} className="h-12 w-12 text-lg" />
-            <InputOTPSlot index={3} className="h-12 w-12 text-lg" />
-            <InputOTPSlot index={4} className="h-12 w-12 text-lg" />
-            <InputOTPSlot index={5} className="h-12 w-12 text-lg" />
+            {Array.from({ length: 6 }).map((_, index) => (
+              <InputOTPSlot
+                key={index}
+                index={index}
+                className="size-12 text-lg"
+              />
+            ))}
           </InputOTPGroup>
         </InputOTP>
       </div>
 
+      {/* Submit group */}
       <Button
         variant="default-gradient"
-        className="h-12 w-full text-base font-semibold"
+        className="h-12 w-full gap-3.5 text-base font-semibold"
         type="submit"
-        disabled={isPending || code.length !== 6}
+        disabled={code.length !== 6 || isPending}
       >
-        {isPending && <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />}
+        {isPending && <Spinner />}
         Підтвердити
       </Button>
     </form>

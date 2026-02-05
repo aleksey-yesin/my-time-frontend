@@ -1,6 +1,6 @@
 'use client';
 
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { toast } from 'sonner';
@@ -26,8 +26,7 @@ const VerifyEmailContent: FC<Props> = ({ searchEmail }) => {
   const setTokenPair = useSetAtom(setTokenPairAtom);
   const successRegistrationParams = useAtomValue(successRegistrationParamsAtom);
   const setRegistrationInitValues = useSetAtom(registrationInitValuesAtom);
-
-  const searchCode = searchParams.get('code');
+  const [code, setCode] = useState(searchParams.get('code') || '');
 
   const { mutate: verifyEmail, isPending: verifyEmailPending } =
     useVerifyEmailMutation({
@@ -47,7 +46,7 @@ const VerifyEmailContent: FC<Props> = ({ searchEmail }) => {
       },
     });
 
-  const handleSubmit = (code: string) => {
+  const handleSubmit = () => {
     verifyEmail({ email: searchEmail, code });
   };
 
@@ -65,9 +64,10 @@ const VerifyEmailContent: FC<Props> = ({ searchEmail }) => {
     <div className="space-y-6 p-8 md:p-10">
       <VerifyEmailContentHeader email={searchEmail} />
       <VerifyEmailForm
+        code={code}
+        onCodeChange={setCode}
         onSubmit={handleSubmit}
         isPending={verifyEmailPending}
-        initialCode={searchCode}
       />
       <div className="space-y-3">
         <VerifyEmailResendButton email={searchEmail} />
