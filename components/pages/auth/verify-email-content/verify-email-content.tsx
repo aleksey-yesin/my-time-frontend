@@ -4,20 +4,25 @@ import { FC, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { toast } from 'sonner';
-import { useVerifyEmailMutation } from '@/lib/api/auth.queries';
+import {
+  useResendEmailVerificationCodeMutation,
+  useVerifyEmailMutation,
+} from '@/lib/api/auth.queries';
 import {
   registrationInitValuesAtom,
   setTokenPairAtom,
   successRegistrationParamsAtom,
 } from '@/lib/atoms/auth.atoms';
+import CountdownButton from '@/components/ui-custom/countdown-button';
 import VerifyEmailContentHeader from './verify-email-content-header';
 import VerifyEmailForm from './verify-email-form';
-import VerifyEmailResendButton from './verify-email-resend-button';
 import VerifyEmailBackButton from './verify-email-back-button';
 
 interface Props {
   searchEmail: string;
 }
+
+const resendAfterSec = 60;
 
 const VerifyEmailContent: FC<Props> = ({ searchEmail }) => {
   const router = useRouter();
@@ -26,7 +31,9 @@ const VerifyEmailContent: FC<Props> = ({ searchEmail }) => {
   const setTokenPair = useSetAtom(setTokenPairAtom);
   const successRegistrationParams = useAtomValue(successRegistrationParamsAtom);
   const setRegistrationInitValues = useSetAtom(registrationInitValuesAtom);
+
   const [code, setCode] = useState(searchParams.get('code') || '');
+  const [countdown, setCountdown] = useState(resendAfterSec);
 
   const { mutate: verifyEmail, isPending: verifyEmailPending } =
     useVerifyEmailMutation({
@@ -46,8 +53,23 @@ const VerifyEmailContent: FC<Props> = ({ searchEmail }) => {
       },
     });
 
+  const { mutate: resendCode, isPending: resendCodePending } =
+    useResendEmailVerificationCodeMutation({
+      onSuccess: () => {
+        toast.success('Код надіслано', {
+          description: 'Перевірте вашу електронну пошту',
+        });
+        setCountdown(resendAfterSec);
+        setCode('');
+      },
+    });
+
   const handleSubmit = () => {
     verifyEmail({ email: searchEmail, code });
+  };
+
+  const handleResendCode = () => {
+    resendCode({ email: searchEmail });
   };
 
   const handleBack = () => {
@@ -70,7 +92,15 @@ const VerifyEmailContent: FC<Props> = ({ searchEmail }) => {
         isPending={verifyEmailPending}
       />
       <div className="space-y-3">
-        <VerifyEmailResendButton email={searchEmail} />
+        <CountdownButton
+          variant="outline"
+          className="h-12 w-full gap-3.5 text-base"
+          onClick={handleResendCode}
+          countdown={countdown}
+          onCountdownChange={setCountdown}
+          text="Надіслати код повторно"
+          isPending={resendCodePending}
+        />
         <VerifyEmailBackButton onClick={handleBack} />
       </div>
     </div>
