@@ -23,41 +23,6 @@ type ApiFetchOptions = {
 
 const mutex = new Mutex();
 
-const useRefreshTokenPair = () => {
-  const { get } = useStore();
-  const setTokenPair = useSetAtom(setTokenPairAtom);
-  const unsetTokenPair = useSetAtom(unsetTokenPairAtom);
-
-  return async () => {
-    const response = await fetch(`${apiBaseUrl}/auth/refresh`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        refresh_token: get(refreshTokenAtom),
-      }),
-    });
-    if (response.ok) {
-      const json = await response.json();
-      setTokenPair({
-        access: json.access_token,
-        refresh: json.refresh_token,
-      });
-    } else {
-      unsetTokenPair();
-    }
-    return response;
-  };
-};
-
-const throwIfNotOk = (response: Response) => {
-  if (!response.ok) {
-    throw new Error(`Status ${response.status}: ${response.statusText}`);
-  }
-  return response;
-};
-
 const useApiFetch = () => {
   const { get } = useStore();
   const refreshTokenPair = useRefreshTokenPair();
@@ -115,3 +80,51 @@ const useApiFetch = () => {
 };
 
 export default useApiFetch;
+
+// ****************************************************************************
+// Helpers
+
+const useRefreshTokenPair = () => {
+  const { get } = useStore();
+  const setTokenPair = useSetAtom(setTokenPairAtom);
+  const unsetTokenPair = useSetAtom(unsetTokenPairAtom);
+
+  return async () => {
+    const response = await fetch(`${apiBaseUrl}/auth/refresh`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        refresh_token: get(refreshTokenAtom),
+      }),
+    });
+    if (response.ok) {
+      const json = await response.json();
+      setTokenPair({
+        access: json.access_token,
+        refresh: json.refresh_token,
+      });
+    } else {
+      unsetTokenPair();
+    }
+    return response;
+  };
+};
+
+// ****************************************************************************
+// Error handling
+
+export class ApiFetchError extends Error {
+  constructor(public response: Response) {
+    super(`[${response.status}] ${response.statusText}`);
+    this.name = 'ApiFetchError';
+  }
+}
+
+const throwIfNotOk = (response: Response) => {
+  if (!response.ok) {
+    throw new ApiFetchError(response);
+  }
+  return response;
+};

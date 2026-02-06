@@ -28,11 +28,18 @@ const VerifyEmailContent: FC<Props> = ({ searchEmail }) => {
           refresh: data.refresh_token,
         });
       },
-      onError: (error) => {
-        if (error.message.toLowerCase().includes('invalid')) {
+      onError: async (error) => {
+        const json = await error.response?.json();
+
+        if (json?.message?.startsWith?.('Invalid')) {
           toast.error('Невірний код підтвердження', {
             description:
               'Перевірте код або натисніть "Надіслати код повторно" для отримання нового',
+          });
+        } else if (error.response?.status === 429) {
+          toast.error('Перевищено ліміт спроб', {
+            description:
+              'Будь ласка, зачекайте пару хвилин перед наступною спробою',
           });
         }
       },
