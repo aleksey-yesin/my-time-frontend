@@ -5,16 +5,16 @@ import { Spinner } from '@/components/ui/spinner';
 type CountdownUpdater = (seconds: number) => number;
 
 type CountdownButtonProps = {
+  text: string;
   countdown: number;
   onCountdownChange: (updater: CountdownUpdater) => void;
-  text: string;
   isPending?: boolean;
 } & React.ComponentProps<typeof Button>;
 
 const CountdownButton: FC<CountdownButtonProps> = ({
+  text,
   countdown,
   onCountdownChange,
-  text,
   isPending,
   ...buttonProps
 }) => {

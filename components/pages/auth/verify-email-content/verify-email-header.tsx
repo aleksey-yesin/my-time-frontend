@@ -5,7 +5,7 @@ interface Props {
   email: string;
 }
 
-const VerifyEmailContentHeader: FC<Props> = ({ email }) => {
+const VerifyEmailHeader: FC<Props> = ({ email }) => {
   return (
     <div className="text-center">
       {/* Icon */}
@@ -24,4 +24,4 @@ const VerifyEmailContentHeader: FC<Props> = ({ email }) => {
   );
 };
 
-export default VerifyEmailContentHeader;
+export default VerifyEmailHeader;
