@@ -34,6 +34,12 @@ const VerifyEmailActions: FC<Props> = ({ searchEmail, onCodeChange }) => {
         setCountdown(resendAfterSec);
         onCodeChange('');
       },
+      onError: () => {
+        toast.error('Щось пішло не так', {
+          description:
+            'Будь ласка, спробуйте пізніше або повідомте нам про проблему',
+        });
+      },
     });
 
   const handleBack = () => {

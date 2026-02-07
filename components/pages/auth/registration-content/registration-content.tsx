@@ -11,9 +11,10 @@ import {
 } from '@/lib/atoms/auth.atoms';
 import SeparatorWithText from '@/components/ui-custom/separator-with-text';
 import GoogleButton from '@/components/ui-custom/google-button/google-button';
-import RegistrationContentHeader from './registration-content-header';
+import { ApiFetchError } from '@/lib/use-api-fetch';
+import RegistrationHeader from './registration-header';
 import RegistrationForm, { RegistrationFormValues } from './registration-form';
-import RegistrationContentFooter from './registration-content-footer';
+import RegistrationFooter from './registration-footer';
 
 const RegistrationContent: FC = () => {
   const router = useRouter();
@@ -30,16 +31,30 @@ const RegistrationContent: FC = () => {
       setSuccessRegistrationParams(params);
       router.push(`/verify-email?email=${encodeURIComponent(params.email)}`);
     },
-    onError: (error) => {
-      if (error.message.includes('already exists')) {
-        toast.error('Користувач з таким email вже існує', {
-          description: 'Спробуйте увійти або скористайтеся іншим email',
-          action: {
-            label: 'Увійти',
-            onClick: () => router.push('/login'),
-          },
-        });
+    onError: async (error) => {
+      if (error instanceof ApiFetchError) {
+        const json = await error.response.json();
+
+        if (json.message.includes?.('already exists')) {
+          return toast.error('Користувач з таким email вже існує', {
+            description: 'Спробуйте увійти або скористайтеся іншим email',
+            action: {
+              label: 'Увійти',
+              onClick: () => router.push('/login'),
+            },
+          });
+        }
+        if (error.response.status === 429) {
+          return toast.error('Перевищено ліміт спроб', {
+            description:
+              'Будь ласка, зачекайте пару хвилин перед наступною спробою',
+          });
+        }
       }
+      toast.error('Щось пішло не так', {
+        description:
+          'Будь ласка, спробуйте пізніше або повідомте нам про проблему',
+      });
     },
   });
 
@@ -57,7 +72,7 @@ const RegistrationContent: FC = () => {
 
   return (
     <div className="space-y-6 p-8 md:p-10">
-      <RegistrationContentHeader />
+      <RegistrationHeader />
       <RegistrationForm
         onSubmit={handleSubmit}
         isPending={registerPending}
@@ -65,7 +80,7 @@ const RegistrationContent: FC = () => {
       />
       <SeparatorWithText text="або" />
       <GoogleButton />
-      <RegistrationContentFooter />
+      <RegistrationFooter />
     </div>
   );
 };

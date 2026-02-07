@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import AppLogoIcon from '@/components/ui-custom/app-logo-icon';
 
-const LoginContentHeader: FC = () => {
+const LoginHeader: FC = () => {
   return (
     <div className="text-center">
       {/* Logo */}
@@ -17,4 +17,4 @@ const LoginContentHeader: FC = () => {
   );
 };
 
-export default LoginContentHeader;
+export default LoginHeader;

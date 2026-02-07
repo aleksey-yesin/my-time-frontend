@@ -1,5 +1,5 @@
 import { useMutation, UseMutationOptions } from '@tanstack/react-query';
-import useApiFetch, { ApiFetchError } from '@/lib/use-api-fetch';
+import useApiFetch from '@/lib/use-api-fetch';
 
 // ****************************************************************************
 // Register Mutation
@@ -41,7 +41,7 @@ export interface VerifyEmailResponse {
 export const useVerifyEmailMutation = (
   mutationOptions?: UseMutationOptions<
     VerifyEmailResponse,
-    ApiFetchError,
+    Error,
     VerifyEmailParams
   >,
 ) => {
