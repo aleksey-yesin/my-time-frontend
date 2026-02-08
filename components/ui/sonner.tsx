@@ -18,30 +18,36 @@ const Toaster = ({ ...props }: ToasterProps) => {
       theme={theme as ToasterProps["theme"]}
       className="toaster group"
       icons={{
-        success: <CircleCheckIcon className="size-4" />,
-        info: <InfoIcon className="size-4" />,
-        warning: <TriangleAlertIcon className="size-4" />,
-        error: <OctagonXIcon className="size-4" />,
-        loading: <Loader2Icon className="size-4 animate-spin" />,
+        success: <CircleCheckIcon className="size-5" />,
+        info: <InfoIcon className="size-5" />,
+        warning: <TriangleAlertIcon className="size-5" />,
+        error: <OctagonXIcon className="size-5" />,
+        loading: <Loader2Icon className="size-5 animate-spin" />,
       }}
+      style={
+        {
+          '--normal-bg': 'var(--popover)',
+          '--normal-text': 'var(--popover-foreground)',
+          '--normal-border': 'var(--border)',
+          '--border-radius': 'var(--radius)',
+        } as React.CSSProperties
+      }
       toastOptions={{
         classNames: {
           toast:
-            "font-sans !rounded-lg !border !border-border/60 !shadow-md !bg-card !text-card-foreground",
-          title: "!text-sm !font-medium",
-          description: "!text-xs !text-muted-foreground",
+            "rounded-xl border border-border shadow-md backdrop-blur-sm",
+          title: "text-sm font-medium",
+          description: "text-xs text-muted-foreground",
           actionButton:
-            "!bg-primary !text-primary-foreground !rounded-md !text-xs !font-medium !px-2.5 !h-7 hover:!opacity-90 !transition-opacity !duration-300 !border-0",
+            "bg-primary text-primary-foreground rounded-lg text-xs font-medium px-3 h-8 hover:opacity-90 transition-opacity duration-300",
           cancelButton:
-            "!bg-muted !text-muted-foreground !rounded-md !text-xs !font-medium !px-2.5 !h-7 hover:!bg-muted/80 !transition-colors !duration-300 !border-0",
+            "bg-muted text-muted-foreground rounded-lg text-xs font-medium px-3 h-8 hover:bg-muted/80 transition-colors duration-300",
           closeButton:
-            "!bg-card !text-muted-foreground !border-border/60 hover:!text-foreground hover:!border-border !transition-colors !duration-300",
-          success: "!border-emerald-500/30 [&>[data-icon]]:!text-emerald-600",
-          error:
-            "!border-destructive/30 [&>[data-icon]]:!text-destructive",
-          warning:
-            "!border-amber-500/30 [&>[data-icon]]:!text-amber-600",
-          info: "!border-blue-500/30 [&>[data-icon]]:!text-blue-600",
+            "bg-popover text-muted-foreground border-border hover:text-foreground hover:border-border transition-colors duration-300",
+          success: "[&>[data-icon]]:text-toast-success",
+          error: "[&>[data-icon]]:text-toast-error",
+          warning: "[&>[data-icon]]:text-toast-warning",
+          info: "[&>[data-icon]]:text-toast-info",
         },
       }}
       {...props}

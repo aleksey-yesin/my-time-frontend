@@ -38,6 +38,11 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  /* Toast colors */
+  --toast-success: oklch(0.65 0.15 155);
+  --toast-error: oklch(0.58 0.2 25);
+  --toast-warning: oklch(0.72 0.15 75);
+  --toast-info: oklch(0.6 0.15 250);
   /* Shadows */
   --shadow-primary:
     0 4px 24px -4px oklch(from var(--primary) l c h / 0.12),
@@ -98,6 +103,11 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(0.269 0 0);
   --sidebar-ring: oklch(0.439 0 0);
+  /* Toast colors */
+  --toast-success: oklch(0.7 0.15 155);
+  --toast-error: oklch(0.65 0.2 25);
+  --toast-warning: oklch(0.75 0.15 75);
+  --toast-info: oklch(0.65 0.15 250);
 }
 
 @theme inline {
@@ -142,6 +152,10 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --color-toast-success: var(--toast-success);
+  --color-toast-error: var(--toast-error);
+  --color-toast-warning: var(--toast-warning);
+  --color-toast-info: var(--toast-info);
   /* Custom values */
   --shadow-primary: var(--shadow-primary);
   --shadow-primary-lg: var(--shadow-primary-lg);
