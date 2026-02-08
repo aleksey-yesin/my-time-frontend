@@ -39,10 +39,14 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
   /* Toast colors */
-  --toast-success: oklch(0.65 0.15 155);
-  --toast-error: oklch(0.58 0.2 25);
-  --toast-warning: oklch(0.72 0.15 75);
-  --toast-info: oklch(0.6 0.15 250);
+  --success-foreground: oklch(0.55 0.16 155);
+  --success-border: oklch(0.85 0.08 155);
+  --error-foreground: oklch(0.55 0.2 25);
+  --error-border: oklch(0.88 0.08 25);
+  --warning-foreground: oklch(0.6 0.15 75);
+  --warning-border: oklch(0.88 0.06 75);
+  --info-foreground: oklch(0.5 0.15 250);
+  --info-border: oklch(0.85 0.08 250);
   /* Shadows */
   --shadow-primary:
     0 4px 24px -4px oklch(from var(--primary) l c h / 0.12),
@@ -104,10 +108,14 @@
   --sidebar-border: oklch(0.269 0 0);
   --sidebar-ring: oklch(0.439 0 0);
   /* Toast colors */
-  --toast-success: oklch(0.7 0.15 155);
-  --toast-error: oklch(0.65 0.2 25);
-  --toast-warning: oklch(0.75 0.15 75);
-  --toast-info: oklch(0.65 0.15 250);
+  --success-foreground: oklch(0.7 0.15 155);
+  --success-border: oklch(0.35 0.08 155);
+  --error-foreground: oklch(0.7 0.18 25);
+  --error-border: oklch(0.35 0.08 25);
+  --warning-foreground: oklch(0.75 0.15 75);
+  --warning-border: oklch(0.35 0.06 75);
+  --info-foreground: oklch(0.7 0.15 250);
+  --info-border: oklch(0.35 0.08 250);
 }
 
 @theme inline {
@@ -152,10 +160,14 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
-  --color-toast-success: var(--toast-success);
-  --color-toast-error: var(--toast-error);
-  --color-toast-warning: var(--toast-warning);
-  --color-toast-info: var(--toast-info);
+  --color-success-foreground: var(--success-foreground);
+  --color-success-border: var(--success-border);
+  --color-error-foreground: var(--error-foreground);
+  --color-error-border: var(--error-border);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-warning-border: var(--warning-border);
+  --color-info-foreground: var(--info-foreground);
+  --color-info-border: var(--info-border);
   /* Custom values */
   --shadow-primary: var(--shadow-primary);
   --shadow-primary-lg: var(--shadow-primary-lg);

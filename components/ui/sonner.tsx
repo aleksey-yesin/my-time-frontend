@@ -17,12 +17,13 @@ const Toaster = ({ ...props }: ToasterProps) => {
     <Sonner
       theme={theme as ToasterProps["theme"]}
       className="toaster group"
+      position="top-center"
       icons={{
-        success: <CircleCheckIcon className="size-5" />,
-        info: <InfoIcon className="size-5" />,
-        warning: <TriangleAlertIcon className="size-5" />,
-        error: <OctagonXIcon className="size-5" />,
-        loading: <Loader2Icon className="size-5 animate-spin" />,
+        success: <CircleCheckIcon className="size-4" />,
+        info: <InfoIcon className="size-4" />,
+        warning: <TriangleAlertIcon className="size-4" />,
+        error: <OctagonXIcon className="size-4" />,
+        loading: <Loader2Icon className="size-4 animate-spin" />,
       }}
       style={
         {
@@ -36,18 +37,18 @@ const Toaster = ({ ...props }: ToasterProps) => {
         classNames: {
           toast:
             "rounded-xl border border-border shadow-md backdrop-blur-sm",
-          title: "text-sm font-medium",
-          description: "text-xs text-muted-foreground",
+          title: "text-[15px] font-medium",
+          description: "text-[13px] text-muted-foreground",
           actionButton:
-            "bg-primary text-primary-foreground rounded-lg text-xs font-medium px-3 h-8 hover:opacity-90 transition-opacity duration-300",
+            "bg-primary text-primary-foreground rounded-xl text-sm font-medium px-3 h-8 hover:opacity-90 transition-opacity duration-300",
           cancelButton:
-            "bg-muted text-muted-foreground rounded-lg text-xs font-medium px-3 h-8 hover:bg-muted/80 transition-colors duration-300",
+            "bg-muted text-muted-foreground rounded-xl text-sm font-medium px-3 h-8 hover:bg-muted/80 transition-colors duration-300",
           closeButton:
             "bg-popover text-muted-foreground border-border hover:text-foreground hover:border-border transition-colors duration-300",
-          success: "[&>[data-icon]]:text-toast-success",
-          error: "[&>[data-icon]]:text-toast-error",
-          warning: "[&>[data-icon]]:text-toast-warning",
-          info: "[&>[data-icon]]:text-toast-info",
+          success: "border-success-border [&>[data-icon]]:text-success-foreground",
+          error: "border-error-border [&>[data-icon]]:text-error-foreground",
+          warning: "border-warning-border [&>[data-icon]]:text-warning-foreground",
+          info: "border-info-border [&>[data-icon]]:text-info-foreground",
         },
       }}
       {...props}
