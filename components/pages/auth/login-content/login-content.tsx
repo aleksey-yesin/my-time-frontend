@@ -24,8 +24,15 @@ const LoginContent: FC = () => {
         refresh: data.refresh_token,
       });
     },
-    onError: async (error) => {
+    onError: async (error, params) => {
       if (error instanceof ApiFetchError) {
+        const json = await error.response.json();
+
+        if (json.message.startsWith?.('Please verify')) {
+          return router.push(
+            `/verify-email?email=${encodeURIComponent(params.email)}`,
+          );
+        }
         if (error.response.status === 401) {
           return toast.error('Помилка авторизації', {
             description: 'Перевірте правильність введених даних',
