@@ -27,6 +27,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
       }}
       style={
         {
+          '--width': '384px',
           '--normal-bg': 'var(--popover)',
           '--normal-text': 'var(--popover-foreground)',
           '--normal-border': 'var(--border)',
@@ -35,21 +36,21 @@ const Toaster = ({ ...props }: ToasterProps) => {
       }
       toastOptions={{
         classNames: {
-          toast: 'font-sans',
+          toast:
+            'font-sans *:data-button:h-8! *:data-button:cursor-default! *:data-button:rounded-xl! *:data-button:px-3! *:data-button:text-sm! *:data-button:transition-colors! *:data-button:duration-300!',
           title: 'text-sm',
-          description: '!text-muted-foreground',
-          actionButton:
-            '!bg-primary !text-primary-foreground !rounded-xl !text-sm !px-3 !h-8 hover:!bg-primary/80 !transition-colors !duration-300 !cursor-default',
-          cancelButton:
-            '!bg-muted !text-muted-foreground !rounded-xl !text-sm !px-3 !h-8 hover:!bg-muted/60 !transition-colors !duration-300 !cursor-default',
+          description: 'text-muted-foreground!',
           closeButton:
-            '!bg-popover !text-muted-foreground !border-border hover:!text-foreground !transition-colors !duration-300 !cursor-default',
-          success:
-            '!border-success-border [&>[data-icon]]:text-success-foreground',
-          error: '!border-error-border [&>[data-icon]]:text-error-foreground',
-          warning:
-            '!border-warning-border [&>[data-icon]]:text-warning-foreground',
-          info: '!border-info-border [&>[data-icon]]:text-info-foreground',
+            'cursor-default! border-border! bg-popover! text-muted-foreground! transition-colors! duration-300! hover:text-popover-foreground!',
+
+          actionButton:
+            'bg-primary! text-primary-foreground! hover:bg-primary/80!',
+          cancelButton: 'bg-muted! text-muted-foreground! hover:bg-muted/60!',
+
+          success: 'border-success-border! text-success-soft-foreground!',
+          error: 'border-error-border! text-error-soft-foreground!',
+          warning: 'border-warning-border! text-warning-soft-foreground!',
+          info: 'border-info-border! text-info-soft-foreground!',
         },
       }}
       {...props}
