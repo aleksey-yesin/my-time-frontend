@@ -1,16 +1,33 @@
 import { useCallback, useMemo } from 'react';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { eightCharId } from '@/lib/utils';
 import {
+  type HistoryPoint,
   historyPointByIdAtom,
   pushHistoryPointAtom,
   removeHistoryPointAtom,
 } from '@/lib/atoms/navigation.atoms';
 
-export function useNavigateBack(defaultBackUrl?: string) {
+type UseNavigateBackResult = {
+  backHistoryPoint: HistoryPoint | undefined;
+  historyPointId: string;
+  pushCurrentPoint: () => void;
+  removeBackHistoryPoint: () => void;
+  navigateBack: () => void;
+};
+
+function useNavigateBack(
+  defaultBackUrl: string,
+): UseNavigateBackResult & { backUrl: string };
+function useNavigateBack(
+  defaultBackUrl?: string,
+): UseNavigateBackResult & { backUrl: string | undefined };
+
+function useNavigateBack(defaultBackUrl?: string) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const router = useRouter();
 
   const backHistoryPoint = useAtomValue(
     historyPointByIdAtom(searchParams.get('back-id')),
@@ -32,9 +49,27 @@ export function useNavigateBack(defaultBackUrl?: string) {
     });
   }, [pushHistoryPoint, historyPointId, pathname, searchParams]);
 
+  const removeBackHistoryPoint = useCallback(() => {
+    if (backHistoryPoint) {
+      removeHistoryPoint(backHistoryPoint.id);
+    }
+  }, [backHistoryPoint, removeHistoryPoint]);
+
+  const navigateBack = useCallback(() => {
+    removeBackHistoryPoint();
+    if (backUrl) {
+      router.push(backUrl);
+    }
+  }, [removeBackHistoryPoint, backUrl, router]);
+
   return {
+    backHistoryPoint,
+    backUrl,
     historyPointId,
     pushCurrentPoint,
-    backUrl,
+    removeBackHistoryPoint,
+    navigateBack,
   };
 }
+
+export default useNavigateBack;
