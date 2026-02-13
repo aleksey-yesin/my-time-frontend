@@ -15,9 +15,7 @@ export interface CurrentUserWithCompaniesResponse {
 }
 
 export const useCurrentUserWithCompaniesQuery = (
-  queryOptions?: Partial<
-    UseQueryOptions<CurrentUserWithCompaniesResponse, Error>
-  >,
+  queryOptions?: Partial<UseQueryOptions<CurrentUserWithCompaniesResponse>>,
 ) => {
   const apiFetch = useApiFetch();
 

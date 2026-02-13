@@ -1,0 +1,81 @@
+'use client';
+
+import { FC, useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { useSetAtom } from 'jotai';
+import { toast } from 'sonner';
+import { useVerifyEmailMutation } from '@/lib/api/auth.queries';
+import {
+  setTokenPairAtom,
+  successRegistrationParamsAtom,
+} from '@/lib/atoms/auth.atoms';
+import { ApiFetchError } from '@/lib/use-api-fetch';
+import VerifyEmailForm from './verify-email-form';
+import VerifyEmailActions from './verify-email-actions';
+import VerifyEmailHeader from './verify-email-header';
+
+interface Props {
+  searchEmail: string;
+}
+
+const VerifyEmailContent: FC<Props> = ({ searchEmail }) => {
+  const searchParams = useSearchParams();
+
+  const setTokenPair = useSetAtom(setTokenPairAtom);
+  const setSuccessRegistrationParams = useSetAtom(
+    successRegistrationParamsAtom,
+  );
+  const [code, setCode] = useState(searchParams.get('code') || '');
+
+  const { mutate: verifyEmail, isPending: verifyEmailPending } =
+    useVerifyEmailMutation({
+      onSuccess: (data) => {
+        setTokenPair({
+          access: data.access_token,
+          refresh: data.refresh_token,
+        });
+      },
+      onError: async (error) => {
+        if (error instanceof ApiFetchError) {
+          const json = await error.response.json();
+
+          if (json.message.startsWith?.('Invalid')) {
+            return toast.error('Невірний код підтвердження', {
+              description:
+                'Перевірте код або натисніть "Надіслати код повторно" для отримання нового',
+            });
+          }
+          if (error.response.status === 429) {
+            return toast.error('Перевищено ліміт спроб', {
+              description:
+                'Будь ласка, зачекайте пару хвилин перед наступною спробою',
+            });
+          }
+        }
+        toast.error('Щось пішло не так', {
+          description:
+            'Будь ласка, спробуйте пізніше або повідомте нам про проблему',
+        });
+      },
+    });
+
+  useEffect(() => {
+    // We use forking to state pattern (see VerifyEmailActions)
+    setSuccessRegistrationParams(null);
+  }, [setSuccessRegistrationParams]);
+
+  return (
+    <div className="space-y-6 p-8 md:p-10">
+      <VerifyEmailHeader email={searchEmail} />
+      <VerifyEmailForm
+        code={code}
+        onCodeChange={setCode}
+        onSubmit={() => verifyEmail({ email: searchEmail, code })}
+        isPending={verifyEmailPending}
+      />
+      <VerifyEmailActions searchEmail={searchEmail} onCodeChange={setCode} />
+    </div>
+  );
+};
+
+export default VerifyEmailContent;
