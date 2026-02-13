@@ -1,11 +1,14 @@
 'use client';
 
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useSetAtom } from 'jotai';
 import { toast } from 'sonner';
 import { useVerifyEmailMutation } from '@/lib/api/auth.queries';
-import { setTokenPairAtom } from '@/lib/atoms/auth.atoms';
+import {
+  setTokenPairAtom,
+  successRegistrationParamsAtom,
+} from '@/lib/atoms/auth.atoms';
 import { ApiFetchError } from '@/lib/use-api-fetch';
 import VerifyEmailForm from './verify-email-form';
 import VerifyEmailActions from './verify-email-actions';
@@ -19,6 +22,9 @@ const VerifyEmailContent: FC<Props> = ({ searchEmail }) => {
   const searchParams = useSearchParams();
 
   const setTokenPair = useSetAtom(setTokenPairAtom);
+  const setSuccessRegistrationParams = useSetAtom(
+    successRegistrationParamsAtom,
+  );
   const [code, setCode] = useState(searchParams.get('code') || '');
 
   const { mutate: verifyEmail, isPending: verifyEmailPending } =
@@ -52,6 +58,10 @@ const VerifyEmailContent: FC<Props> = ({ searchEmail }) => {
         });
       },
     });
+
+  useEffect(() => {
+    return () => setSuccessRegistrationParams(null);
+  }, [setSuccessRegistrationParams]);
 
   return (
     <div className="space-y-6 p-8 md:p-10">

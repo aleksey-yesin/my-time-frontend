@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
+import Link from 'next/link';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { ArrowLeftIcon } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import CountdownButton from '@/components/ui-custom/countdown-button';
 import { Button } from '@/components/ui/button';
@@ -10,20 +10,22 @@ import {
   registrationInitValuesAtom,
   successRegistrationParamsAtom,
 } from '@/lib/atoms/auth.atoms';
+import useNavigateBack from '@/hooks/use-navigate-back';
 
 interface Props {
-  searchEmail: string;
   onCodeChange: (newCode: string) => void;
+  searchEmail: string;
 }
 
 const resendAfterSec = 60;
 
-const VerifyEmailActions: FC<Props> = ({ searchEmail, onCodeChange }) => {
-  const router = useRouter();
-
+const VerifyEmailActions: FC<Props> = ({ onCodeChange, searchEmail }) => {
   const successRegistrationParams = useAtomValue(successRegistrationParamsAtom);
   const setRegistrationInitValues = useSetAtom(registrationInitValuesAtom);
   const [countdown, setCountdown] = useState(resendAfterSec);
+  const { backHistoryPoint, backUrl } = useNavigateBack('/registration');
+
+  const isBackToLogin = backHistoryPoint?.pathname === '/login';
 
   const { mutate: resendCode, isPending: resendCodePending } =
     useResendEmailVerificationCodeMutation({
@@ -42,7 +44,10 @@ const VerifyEmailActions: FC<Props> = ({ searchEmail, onCodeChange }) => {
       },
     });
 
-  const handleBack = () => {
+  const handleNavigateBack = () => {
+    if (isBackToLogin) {
+      return;
+    }
     if (successRegistrationParams) {
       const { email, password } = successRegistrationParams;
       setRegistrationInitValues({
@@ -53,7 +58,6 @@ const VerifyEmailActions: FC<Props> = ({ searchEmail, onCodeChange }) => {
     } else {
       setRegistrationInitValues({ email: searchEmail });
     }
-    router.push('/registration');
   };
 
   return (
@@ -69,12 +73,13 @@ const VerifyEmailActions: FC<Props> = ({ searchEmail, onCodeChange }) => {
       />
       <Button
         variant="ghost"
-        className="h-12 w-full gap-3.5 text-base text-muted-foreground"
-        type="button"
-        onClick={handleBack}
+        className="h-12 w-full cursor-default gap-3.5 text-base text-muted-foreground"
+        asChild
       >
-        <ArrowLeftIcon />
-        Змінити email
+        <Link href={backUrl} onNavigate={handleNavigateBack}>
+          <ArrowLeftIcon />
+          {isBackToLogin ? 'Увійти в інший акаунт' : 'Змінити email'}
+        </Link>
       </Button>
     </div>
   );
