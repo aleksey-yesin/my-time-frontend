@@ -22,8 +22,12 @@ const resendAfterSec = 60;
 const VerifyEmailActions: FC<Props> = ({ onCodeChange, searchEmail }) => {
   const successRegistrationParams = useAtomValue(successRegistrationParamsAtom);
   const setRegistrationInitValues = useSetAtom(registrationInitValuesAtom);
+
   const [countdown, setCountdown] = useState(resendAfterSec);
-  const { backHistoryPoint, backUrl } = useNavigateBack('/registration');
+  const [forkedRegistrationParams] = useState(successRegistrationParams);
+
+  const { backHistoryPoint, removeBackHistoryPoint, backUrl } =
+    useNavigateBack('/registration');
 
   const isBackToLogin = backHistoryPoint?.pathname === '/login';
 
@@ -45,11 +49,11 @@ const VerifyEmailActions: FC<Props> = ({ onCodeChange, searchEmail }) => {
     });
 
   const handleNavigateBack = () => {
-    if (isBackToLogin) {
-      return;
-    }
-    if (successRegistrationParams) {
-      const { email, password } = successRegistrationParams;
+    removeBackHistoryPoint();
+    if (isBackToLogin) return;
+
+    if (forkedRegistrationParams) {
+      const { email, password } = forkedRegistrationParams;
       setRegistrationInitValues({
         email,
         password,

@@ -9,6 +9,7 @@ import { setTokenPairAtom } from '@/lib/atoms/auth.atoms';
 import SeparatorWithText from '@/components/ui-custom/separator-with-text';
 import GoogleButton from '@/components/ui-custom/google-button/google-button';
 import { ApiFetchError } from '@/lib/use-api-fetch';
+import useNavigateBack from '@/hooks/use-navigate-back';
 import LoginHeader from './login-header';
 import LoginForm from './login-form';
 import LoginFooter from './login-footer';
@@ -16,6 +17,7 @@ import LoginFooter from './login-footer';
 const LoginContent: FC = () => {
   const router = useRouter();
   const setTokenPair = useSetAtom(setTokenPairAtom);
+  const { pushCurrentPoint, historyPointId } = useNavigateBack();
 
   const { mutate: login } = useLoginMutation({
     onSuccess: (data) => {
@@ -29,8 +31,9 @@ const LoginContent: FC = () => {
         const json = await error.response.json();
 
         if (json.message.startsWith?.('Please verify')) {
+          pushCurrentPoint();
           return router.push(
-            `/verify-email?email=${encodeURIComponent(params.email)}`,
+            `/verify-email?email=${encodeURIComponent(params.email)}&back-id=${historyPointId}`,
           );
         }
         if (error.response.status === 401) {

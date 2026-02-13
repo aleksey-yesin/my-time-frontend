@@ -10,7 +10,6 @@ const RegistrationFooter: FC = () => {
       <Button
         variant="link"
         className="h-5 cursor-default px-1 font-semibold"
-        type="button"
         asChild
       >
         <Link href="/login">Увійти</Link>

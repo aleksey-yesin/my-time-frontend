@@ -12,12 +12,14 @@ import {
 import SeparatorWithText from '@/components/ui-custom/separator-with-text';
 import GoogleButton from '@/components/ui-custom/google-button/google-button';
 import { ApiFetchError } from '@/lib/use-api-fetch';
+import useNavigateBack from '@/hooks/use-navigate-back';
 import RegistrationHeader from './registration-header';
 import RegistrationForm, { RegistrationFormValues } from './registration-form';
 import RegistrationFooter from './registration-footer';
 
 const RegistrationContent: FC = () => {
   const router = useRouter();
+  const { pushCurrentPoint, historyPointId } = useNavigateBack();
 
   const [registrationInitValues, setRegistrationInitValues] = useAtom(
     registrationInitValuesAtom,
@@ -29,7 +31,10 @@ const RegistrationContent: FC = () => {
   const { mutate: register, isPending: registerPending } = useRegisterMutation({
     onSuccess: (_, params) => {
       setSuccessRegistrationParams(params);
-      router.push(`/verify-email?email=${encodeURIComponent(params.email)}`);
+      pushCurrentPoint();
+      router.push(
+        `/verify-email?email=${encodeURIComponent(params.email)}&back-id=${historyPointId}`,
+      );
     },
     onError: async (error) => {
       if (error instanceof ApiFetchError) {

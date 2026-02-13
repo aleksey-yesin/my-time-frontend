@@ -60,7 +60,8 @@ const VerifyEmailContent: FC<Props> = ({ searchEmail }) => {
     });
 
   useEffect(() => {
-    return () => setSuccessRegistrationParams(null);
+    // We use forking to state pattern (see VerifyEmailActions)
+    setSuccessRegistrationParams(null);
   }, [setSuccessRegistrationParams]);
 
   return (
