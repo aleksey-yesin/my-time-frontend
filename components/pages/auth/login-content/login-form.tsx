@@ -58,12 +58,7 @@ const LoginForm: FC<Props> = ({ onSubmit }) => {
             <Field data-invalid={fieldState.invalid}>
               <div className="flex items-center justify-between">
                 <FieldLabel htmlFor="login-form-password">Пароль</FieldLabel>
-                <Button
-                  variant="link"
-                  className="h-5 cursor-default"
-                  type="button"
-                  asChild
-                >
+                <Button variant="link" className="h-5 cursor-default" asChild>
                   <Link href="/forgot-password">Забули?</Link>
                 </Button>
               </div>

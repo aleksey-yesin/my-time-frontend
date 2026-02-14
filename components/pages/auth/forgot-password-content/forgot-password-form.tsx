@@ -39,12 +39,10 @@ const ForgotPasswordForm: FC<Props> = ({ onSubmit, isPending }) => {
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor="forgot-password-form-email">
-                Email
-              </FieldLabel>
+              <FieldLabel htmlFor="forgot-password-email">Email</FieldLabel>
               <Input
                 {...field}
-                id="forgot-password-form-email"
+                id="forgot-password-email"
                 aria-invalid={fieldState.invalid}
                 placeholder="your@email.com"
               />

@@ -144,21 +144,32 @@ export const useLogoutMutation = (
 };
 
 // ****************************************************************************
+// Logout All Mutation
+
+export const useLogoutAllMutation = (
+  mutationOptions?: UseMutationOptions<void>,
+) => {
+  const apiFetch = useApiFetch();
+
+  return useMutation({
+    mutationFn: async () => {
+      await apiFetch('/auth/logout-all', {
+        method: 'POST',
+      });
+    },
+    ...mutationOptions,
+  });
+};
+
+// ****************************************************************************
 // Forgot Password Mutation
 
 export interface ForgotPasswordParams {
   email: string;
 }
-export interface ForgotPasswordResponse {
-  message: string;
-}
 
 export const useForgotPasswordMutation = (
-  mutationOptions?: UseMutationOptions<
-    ForgotPasswordResponse,
-    Error,
-    ForgotPasswordParams
-  >,
+  mutationOptions?: UseMutationOptions<void, Error, ForgotPasswordParams>,
 ) => {
   const apiFetch = useApiFetch();
 
@@ -205,24 +216,6 @@ export const useResetPasswordMutation = (
         skipAuth: true,
       });
       return response.json();
-    },
-    ...mutationOptions,
-  });
-};
-
-// ****************************************************************************
-// Logout All Mutation
-
-export const useLogoutAllMutation = (
-  mutationOptions?: UseMutationOptions<void>,
-) => {
-  const apiFetch = useApiFetch();
-
-  return useMutation({
-    mutationFn: async () => {
-      await apiFetch('/auth/logout-all', {
-        method: 'POST',
-      });
     },
     ...mutationOptions,
   });
