@@ -9,7 +9,7 @@ interface Props {
 const VerifyEmailPage: FC<Props> = async ({ searchParams }) => {
   const { email } = await searchParams;
 
-  if (typeof email !== 'string') {
+  if (!email || typeof email !== 'string') {
     redirect('/registration');
   }
 

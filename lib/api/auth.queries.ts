@@ -160,3 +160,63 @@ export const useLogoutAllMutation = (
     ...mutationOptions,
   });
 };
+
+// ****************************************************************************
+// Forgot Password Mutation
+
+export interface ForgotPasswordParams {
+  email: string;
+}
+
+export const useForgotPasswordMutation = (
+  mutationOptions?: UseMutationOptions<void, Error, ForgotPasswordParams>,
+) => {
+  const apiFetch = useApiFetch();
+
+  return useMutation({
+    mutationFn: async (params) => {
+      const response = await apiFetch('/auth/forgot-password', {
+        method: 'POST',
+        body: JSON.stringify(params),
+        skipAuth: true,
+      });
+      return response.json();
+    },
+    ...mutationOptions,
+  });
+};
+
+// ****************************************************************************
+// Reset Password Mutation
+
+export interface ResetPasswordParams {
+  email: string;
+  code: string;
+  password: string;
+}
+export interface ResetPasswordResponse {
+  access_token: string;
+  refresh_token: string;
+}
+
+export const useResetPasswordMutation = (
+  mutationOptions?: UseMutationOptions<
+    ResetPasswordResponse,
+    Error,
+    ResetPasswordParams
+  >,
+) => {
+  const apiFetch = useApiFetch();
+
+  return useMutation({
+    mutationFn: async (params) => {
+      const response = await apiFetch('/auth/reset-password', {
+        method: 'POST',
+        body: JSON.stringify(params),
+        skipAuth: true,
+      });
+      return response.json();
+    },
+    ...mutationOptions,
+  });
+};
