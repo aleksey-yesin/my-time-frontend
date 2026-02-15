@@ -15,15 +15,15 @@ const resendAfterSec = 60;
 const ResetPasswordActions: FC<Props> = ({ searchEmail }) => {
   const [countdown, setCountdown] = useState(resendAfterSec);
 
-  const { mutate: resendCode, isPending: resendCodePending } =
+  const { mutate: forgotPassword, isPending: forgotPasswordPending } =
     useForgotPasswordMutation({
       onSuccess: () => {
         toast.success('Код надіслано', {
-          description: 'Перевірте вашу електронну пошту',
+          description: 'Якщо email існує, код було надіслано',
         });
         setCountdown(resendAfterSec);
       },
-      onError: async (error) => {
+      onError: async () => {
         toast.error('Щось пішло не так', {
           description:
             'Будь ласка, спробуйте пізніше або повідомте нам про проблему',
@@ -36,11 +36,11 @@ const ResetPasswordActions: FC<Props> = ({ searchEmail }) => {
       <CountdownButton
         variant="outline"
         className="h-12 w-full gap-3.5 text-base"
-        onClick={() => resendCode({ email: searchEmail })}
+        onClick={() => forgotPassword({ email: searchEmail })}
         text="Надіслати код повторно"
         countdown={countdown}
         onCountdownChange={setCountdown}
-        isPending={resendCodePending}
+        isPending={forgotPasswordPending}
       />
       <Button
         variant="ghost"

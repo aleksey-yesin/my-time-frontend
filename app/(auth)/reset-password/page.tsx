@@ -9,7 +9,7 @@ interface Props {
 const ResetPasswordPage: FC<Props> = async ({ searchParams }) => {
   const { email } = await searchParams;
 
-  if (typeof email !== 'string') {
+  if (!email || typeof email !== 'string') {
     redirect('/forgot-password');
   }
 

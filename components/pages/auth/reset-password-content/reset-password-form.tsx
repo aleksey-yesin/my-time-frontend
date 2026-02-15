@@ -20,9 +20,7 @@ import { Spinner } from '@/components/ui/spinner';
 
 const schema = z
   .object({
-    code: z
-      .string()
-      .length(6, { message: 'Код повинен містити 6 цифр' }),
+    code: z.string().length(6, { message: 'Код повинен містити 6 цифр' }),
     password: z
       .string()
       .min(8, { message: 'Мінімум 8 символів' })
@@ -61,14 +59,15 @@ const ResetPasswordForm: FC<Props> = ({ onSubmit, isPending }) => {
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor="reset-password-form-code">
+              <FieldLabel htmlFor="reset-password-code">
                 Код підтвердження
               </FieldLabel>
               <div className="flex justify-center">
                 <InputOTP
+                  {...field}
+                  id="reset-password-code"
+                  aria-invalid={fieldState.invalid}
                   maxLength={6}
-                  value={field.value}
-                  onChange={field.onChange}
                   pattern={REGEXP_ONLY_DIGITS}
                 >
                   <InputOTPGroup>
@@ -91,12 +90,12 @@ const ResetPasswordForm: FC<Props> = ({ onSubmit, isPending }) => {
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor="reset-password-form-password">
+              <FieldLabel htmlFor="reset-password-password">
                 Новий пароль
               </FieldLabel>
               <Input
                 {...field}
-                id="reset-password-form-password"
+                id="reset-password-password"
                 aria-invalid={fieldState.invalid}
                 type="password"
                 placeholder="Мінімум 8 символів, 1 заглавна, 1 строчна, 1 цифра"
@@ -110,12 +109,12 @@ const ResetPasswordForm: FC<Props> = ({ onSubmit, isPending }) => {
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor="reset-password-form-confirm-password">
+              <FieldLabel htmlFor="reset-password-confirm-password">
                 Підтвердіть пароль
               </FieldLabel>
               <Input
                 {...field}
-                id="reset-password-form-confirm-password"
+                id="reset-password-confirm-password"
                 aria-invalid={fieldState.invalid}
                 type="password"
                 placeholder="Повторіть пароль"

@@ -19,49 +19,49 @@ interface Props {
 const ResetPasswordContent: FC<Props> = ({ searchEmail }) => {
   const setTokenPair = useSetAtom(setTokenPairAtom);
 
-  const { mutate: resetPassword, isPending } = useResetPasswordMutation({
-    onSuccess: (data) => {
-      setTokenPair({
-        access: data.access_token,
-        refresh: data.refresh_token,
-      });
-    },
-    onError: async (error) => {
-      if (error instanceof ApiFetchError) {
-        const json = await error.response.json();
+  const { mutate: resetPassword, isPending: resetPasswordPending } =
+    useResetPasswordMutation({
+      onSuccess: (data) => {
+        setTokenPair({
+          access: data.access_token,
+          refresh: data.refresh_token,
+        });
+      },
+      onError: async (error) => {
+        if (error instanceof ApiFetchError) {
+          const json = await error.response.json();
 
-        if (json.message.startsWith?.('Invalid')) {
-          return toast.error('Невірний email або код скидання', {
-            description:
-              'Перевірте код або натисніть "Надіслати код повторно" для отримання нового',
-          });
+          if (json.message.startsWith?.('Invalid')) {
+            return toast.error('Невірний email або код скидання', {
+              description:
+                'Перевірте код або натисніть "Надіслати код повторно" для отримання нового',
+            });
+          }
+          if (error.response.status === 429) {
+            return toast.error('Перевищено ліміт спроб', {
+              description:
+                'Будь ласка, зачекайте пару хвилин перед наступною спробою',
+            });
+          }
         }
-        if (error.response.status === 429) {
-          return toast.error('Перевищено ліміт спроб', {
-            description:
-              'Будь ласка, зачекайте пару хвилин перед наступною спробою',
-          });
-        }
-      }
-      toast.error('Щось пішло не так', {
-        description:
-          'Будь ласка, спробуйте пізніше або повідомте нам про проблему',
-      });
-    },
-  });
-
-  const handleSubmit = (values: ResetPasswordFormValues) => {
-    resetPassword({
-      email: searchEmail,
-      code: values.code,
-      password: values.password,
+        toast.error('Щось пішло не так', {
+          description:
+            'Будь ласка, спробуйте пізніше або повідомте нам про проблему',
+        });
+      },
     });
+
+  const handleSubmit = ({ code, password }: ResetPasswordFormValues) => {
+    resetPassword({ email: searchEmail, code, password });
   };
 
   return (
     <div className="space-y-6 p-8 md:p-10">
       <ResetPasswordHeader email={searchEmail} />
-      <ResetPasswordForm onSubmit={handleSubmit} isPending={isPending} />
+      <ResetPasswordForm
+        onSubmit={handleSubmit}
+        isPending={resetPasswordPending}
+      />
       <ResetPasswordActions searchEmail={searchEmail} />
     </div>
   );
