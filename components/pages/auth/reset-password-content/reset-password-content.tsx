@@ -3,6 +3,7 @@
 import { FC } from 'react';
 import { useSetAtom } from 'jotai';
 import { toast } from 'sonner';
+import { useSearchParams } from 'next/navigation';
 import { useResetPasswordMutation } from '@/lib/api/auth.queries';
 import { setTokenPairAtom } from '@/lib/atoms/auth.atoms';
 import { ApiFetchError } from '@/lib/use-api-fetch';
@@ -17,6 +18,7 @@ interface Props {
 }
 
 const ResetPasswordContent: FC<Props> = ({ searchEmail }) => {
+  const searchParams = useSearchParams();
   const setTokenPair = useSetAtom(setTokenPairAtom);
 
   const { mutate: resetPassword, isPending: resetPasswordPending } =
@@ -59,6 +61,7 @@ const ResetPasswordContent: FC<Props> = ({ searchEmail }) => {
     <div className="space-y-6 p-8 md:p-10">
       <ResetPasswordHeader email={searchEmail} />
       <ResetPasswordForm
+        defaultValues={{ code: searchParams.get('code') || '' }}
         onSubmit={handleSubmit}
         isPending={resetPasswordPending}
       />

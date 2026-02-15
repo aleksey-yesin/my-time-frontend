@@ -37,17 +37,23 @@ const schema = z
 export type ResetPasswordFormValues = z.infer<typeof schema>;
 
 interface Props {
+  defaultValues?: Partial<ResetPasswordFormValues> | null;
   onSubmit: (values: ResetPasswordFormValues) => void;
   isPending: boolean;
 }
 
-const ResetPasswordForm: FC<Props> = ({ onSubmit, isPending }) => {
+const ResetPasswordForm: FC<Props> = ({
+  defaultValues,
+  onSubmit,
+  isPending,
+}) => {
   const form = useForm<ResetPasswordFormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
       code: '',
       password: '',
       confirmPassword: '',
+      ...defaultValues,
     },
   });
 
