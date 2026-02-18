@@ -10,7 +10,7 @@ const LoginHeader: FC = () => {
       </div>
       {/* Title */}
       <h1 className="mb-3 bg-gradient-text-primary bg-clip-text text-4xl font-bold tracking-tight text-transparent md:text-5xl">
-        My Service
+        My Time
       </h1>
       <p className="text-muted-foreground">Увійдіть у свій аккаунт</p>
     </div>
