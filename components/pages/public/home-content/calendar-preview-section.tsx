@@ -14,6 +14,7 @@ const CalendarPreviewSection: FC<Props> = ({ className }) => {
           src={calendarPreviewImg}
           alt="Приклад календаря записів з вибором дати та часу"
           className="h-auto w-full"
+          sizes="(max-width: 1024px) 100vw, 1024px"
           priority
         />
       </div>
