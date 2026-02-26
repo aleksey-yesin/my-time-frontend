@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import Container from '@/components/ui-custom/container';
 import AppLogo from './app-logo';
 
-const Header: FC = () => {
+const PublicHeader: FC = () => {
   return (
     <div className="border-b border-border bg-card/50">
       <Container className="flex items-center justify-between">
@@ -18,4 +18,4 @@ const Header: FC = () => {
   );
 };
 
-export default Header;
+export default PublicHeader;

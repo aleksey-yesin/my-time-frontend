@@ -1,6 +1,6 @@
 import { ComponentProps, FC } from 'react';
 
-const AppLogoIcon: FC<ComponentProps<'svg'>> = (props) => {
+const AppIcon: FC<ComponentProps<'svg'>> = (props) => {
   return (
     <svg
       fill="none"
@@ -21,4 +21,4 @@ const AppLogoIcon: FC<ComponentProps<'svg'>> = (props) => {
   );
 };
 
-export default AppLogoIcon;
+export default AppIcon;

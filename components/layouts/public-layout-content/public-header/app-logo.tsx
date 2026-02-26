@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { FC } from 'react';
-import AppLogoIcon from '@/components/ui-custom/app-logo-icon';
+import AppIcon from '@/components/ui-custom/app-icon';
 
 const AppLogo: FC = () => {
   return (
@@ -12,7 +12,7 @@ const AppLogo: FC = () => {
         className="flex size-10 items-center justify-center rounded-md bg-gradient-primary shadow-primary"
         aria-hidden
       >
-        <AppLogoIcon className="size-5 text-primary-foreground" />
+        <AppIcon className="size-5 text-primary-foreground" />
       </div>
 
       <span className="bg-gradient-text-primary bg-clip-text text-xl font-semibold text-transparent">
