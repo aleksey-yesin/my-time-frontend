@@ -7,7 +7,7 @@ import SecondaryCtaBlock from './secondary-cta-block';
 const HomeContent: FC = () => {
   return (
     <div className="h-full bg-linear-to-b from-background via-muted/20 to-background">
-      <HeroSection className="pt-16 pb-36" />
+      <HeroSection className="p-36" />
       <CalendarPreviewSection className="pb-20" />
       <FeaturesSection className="pb-20" />
       <SecondaryCtaBlock className="pb-16" />

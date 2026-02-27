@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { FC } from 'react';
-import calendarPreviewImg from '@/public/images/calendar-preview.jpg';
+import calendarPreviewImg from '@/public/images/calendar-preview.png';
 
 interface Props {
   className?: string;
